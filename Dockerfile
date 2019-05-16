@@ -1,39 +1,34 @@
-# Download Terraform binary and Azure CLI in a dedicated stage
-FROM debian:stretch-20190506 as download
+# Download Terraform binary
+FROM debian:stretch-20190506-slim as terraform
 ARG TERRAFORM_VERSION=0.11.13
-ARG AZURE_CLI_VERSION=2.0.0
 RUN apt-get update
-RUN apt-get install -y \
-  curl=7.52.1-5+deb9u9 \
-  unzip=6.0-21+deb9u1 \
-  apt-transport-https=1.4.9 \
-  lsb-release=9.20161125 \
-  gnupg=2.1.18-8~deb9u4
-# Terraform binary
+RUN apt-get install -y curl=7.52.1-5+deb9u9
+RUN apt-get install -y unzip=6.0-21+deb9u1
 RUN curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform-${TERRAFORM_VERSION}.zip
+# FIXME: validate terraform signature & checksum
 RUN unzip -j terraform-${TERRAFORM_VERSION}.zip
-# Azure CLI
-RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc \
-  | gpg --dearmor \
-  | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
-RUN AZ_REPO=$(lsb_release -cs) \
-  && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" \
-  | tee /etc/apt/sources.list.d/azure-cli.list
+
+# Install az CLI using PIP
+FROM debian:stretch-20190506-slim as azure-cli-pip
+ARG AZ_CLI_VERSION=2.0.64
 RUN apt-get update
-RUN apt-get install -y \
-  azure-cli=2.0.64-1~stretch
+RUN apt-get install -y curl=7.52.1-5+deb9u9
+RUN apt-get install -y python3=3.5.3-1
+RUN apt-get install -y python3-pip=9.0.1-2+deb9u1
+RUN ln -s /usr/bin/python3 /usr/bin/python
+RUN pip3 install azure-cli==${AZ_CLI_VERSION}
+# Fix a pyOpenSSL package issue... (see https://github.com/erjosito/ansible-azure-lab/issues/5)
+RUN pip3 uninstall -y pyOpenSSL cryptography
+RUN pip3 install pyOpenSSL==19.0.0
+RUN pip3 install cryptography==2.6.1
 
 # Build final image
 FROM debian:stretch-20190506-slim
-RUN apt-get update && apt-get install --no-install-recommends --no-upgrade -y \
-  # python3-pip \
-  # python3-dev=3.5.3-1 \
-  python3=3.5.3-1
-# ENV PATH="/usr/lib/python3.5:${PATH}"
-# RUN ln -fs /usr/lib/python3.5/plat-x86_64-linux-gnu/_sysconfigdata.py /usr/lib/python3.5/
-ENV PYTHONPATH="/usr/lib/python3.5"
-ENV PYTHONHOME="/usr/lib/python3.5"
-COPY --from=download /terraform /usr/local/bin/terraform
-COPY --from=download /usr/bin/az /usr/local/bin/az
-COPY --from=download /opt/az/bin/python3 /opt/az/bin/python3
-CMD bash
+RUN apt-get update \
+  && apt-get install -y python3=3.5.3-1 ssl-cert=1.0.39 \
+  && ln -s /usr/bin/python3 /usr/bin/python
+COPY --from=terraform /terraform /usr/local/bin/terraform
+COPY --from=azure-cli-pip /usr/local/bin/az* /usr/local/bin/
+COPY --from=azure-cli-pip /usr/local/lib/python3.5/dist-packages /usr/local/lib/python3.5/dist-packages
+COPY --from=azure-cli-pip /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages
+CMD ["bash"]
