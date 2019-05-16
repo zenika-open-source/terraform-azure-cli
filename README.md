@@ -7,4 +7,4 @@ Container image including Azure and Terraform CLI, build with Docker
   * terraform: https://www.hashicorp.com/security.html - https://www.terraform.io/downloads.html
 * Shellcheck / hadolint validation
 * Disable azure-cli telemetry (privacy) ?
-* Optimise image size using alpine as a base
+* Optimize image size using alpine as a base
