@@ -12,11 +12,3 @@ The goal is to create a functionnal, minimalist and lightweight image with these
 ```bash
 ./scripts/build.sh
 ```
-
-## Todo
-* Setup autocomplete
-* Checksum / signature validation
-  * terraform: https://www.hashicorp.com/security.html - https://www.terraform.io/downloads.html
-* Shellcheck / hadolint validation
-* Disable azure-cli telemetry (privacy) ?
-* Optimize image size using alpine as a base
