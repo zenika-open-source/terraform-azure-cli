@@ -29,7 +29,7 @@ Tools included:
 
 ## Usage
 
-### launch the CLI
+### Launch the CLI
 Simply launch the container and use the CLI as you would on any other platform:
 ```bash
 docker container run -it --rm zenika/terraform-azure-cli
@@ -38,7 +38,7 @@ docker container run -it --rm zenika/terraform-azure-cli
 > The `--rm` flag will completely destroy the container and its data on exit.
 
 ### Build the image
-Use Docker to build the image from the Dockerfile:
+Build the image locally directly from the Dockerfile:
 ```bash
 docker image build -t zenika/terraform-azure-cli .
 ```
