@@ -1,4 +1,6 @@
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 [![](https://images.microbadger.com/badges/image/zenika/terraform-azure-cli.svg)](https://microbadger.com/images/zenika/terraform-azure-cli)
+![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)
 
 # Terraform and Azure CLI Docker image
 Docker Image including Azure and Terraform CLI tools.
