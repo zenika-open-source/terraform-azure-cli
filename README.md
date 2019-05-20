@@ -3,22 +3,31 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
 # Terraform and Azure CLI Docker image
-Docker Image including Azure and Terraform CLI tools.
 
 ## Availables Docker image tags
-Repository available on the Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
-* zenika/terraform-azure-cli:latest - latest image build on master branch
-* zenika/terraform-azure-cli:vX.Y - versionned image build on specific repository tag
+Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
+
+One images uses [Debian](https://hub.docker.com/_/debian) and the other one uses [Alpine](https://hub.docker.com/_/alpine) as a base.
+
+Debian-based images ([debian.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)):
+
+* zenika/terraform-azure-cli:latest-latest - latest image build on master branch
+* zenika/terraform-azure-cli:X.Y-debian - versionned image build on repository tags
+
+Alpine-based images ([alpine.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)):
+
+* zenika/terraform-azure-cli:alpine-latest - latest image build on master branch
+* zenika/terraform-azure-cli:X.Y-alpine - versionned image build on repository tags
+
+> Git repository tag naming convention: `/^([0-9.]+)$/`
 
 ## Motivation
 Many Docker images including the Terraform and Azure CLI already exist out there, both on the Docker Hub and Github.
 But they all are quite oversized.
 
-The goal is to create a functional, minimalist and lightweight image with these tools in order to reduce network and storage impact.
+The goal is to create a **functional**, **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
 
 ## What's inside ?
-This image uses [Debian Stretch](https://hub.docker.com/_/debian) as a base.
-
 Tools included:
 
 * Azure CLI **v2.0.64**
@@ -32,18 +41,24 @@ Tools included:
 ## Usage
 
 ### Launch the CLI
-Simply launch the container and use the CLI as you would on any other platform:
+Simply launch the container and use the CLI as you would on any other platform, for instance using the *alpine* based image:
 ```bash
-docker container run -it --rm zenika/terraform-azure-cli
+docker container run -it --rm zenika/terraform-azure-cli:alpine-latest
 ```
 
 > The `--rm` flag will completely destroy the container and its data on exit.
 
 ### Build the image
-Build the image locally directly from the Dockerfile:
+You can build the image locally directly from the Dockerfiles:
 ```bash
-docker image build -t zenika/terraform-azure-cli .
+# build the Debian based image:
+docker image build -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
+
+# build the Alpine based image:
+docker image build -f alpine.Dockerfile -t zenika/terraform-azure-cli:alpine .
 ```
+
+> You can use [Docker build arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) to  set custom Terraform & Azure CLI version.
 
 ## Roadmap & Contributions
 Please refer to the [github project](https://github.com/Zenika/terraform-azure-cli/projects/1) to track new features.
