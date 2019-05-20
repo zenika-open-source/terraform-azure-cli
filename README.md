@@ -11,15 +11,15 @@ One images uses [Debian](https://hub.docker.com/_/debian) and the other one uses
 
 Debian-based images ([debian.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)):
 
-* zenika/terraform-azure-cli:debian-latest - latest image build on master branch
-* zenika/terraform-azure-cli:debian-vX.Y - versionned image build on repository tags
+* zenika/terraform-azure-cli:latest-latest - latest image build on master branch
+* zenika/terraform-azure-cli:X.Y-debian - versionned image build on repository tags
 
 Alpine-based images ([alpine.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)):
 
 * zenika/terraform-azure-cli:alpine-latest - latest image build on master branch
-* zenika/terraform-azure-cli:alpine-vX.Y - versionned image build on repository tags
+* zenika/terraform-azure-cli:X.Y-alpine - versionned image build on repository tags
 
-> Repository tag naming convention: `/^v([0-9.]+)$/`
+> Git repository tag naming convention: `/^([0-9.]+)$/`
 
 ## Motivation
 Many Docker images including the Terraform and Azure CLI already exist out there, both on the Docker Hub and Github.
