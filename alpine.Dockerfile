@@ -1,5 +1,6 @@
-ARG TERRAFORM_VERSION=0.11.13
-ARG AZ_CLI_VERSION=2.0.64
+# Setup build arguments with default versions
+ARG AZURE_CLI_VERSION=2.0.65
+ARG TERRAFORM_VERSION=0.11.14
 
 # Download Terraform binary
 FROM alpine:3.9.4 as terraform
@@ -13,7 +14,7 @@ RUN unzip -j terraform-${TERRAFORM_VERSION}.zip
 
 # Install az CLI using PIP
 FROM alpine:3.9.4 as azure-cli
-ARG AZ_CLI_VERSION
+ARG AZURE_CLI_VERSION
 RUN apk update
 RUN apk add python3=3.6.8-r2
 RUN apk add python3-dev=3.6.8-r2
@@ -23,7 +24,7 @@ RUN apk add musl-dev=1.1.20-r4
 RUN apk add libffi-dev=3.2.1-r6
 RUN apk add openssl-dev=1.1.1b-r1
 RUN apk add make=4.2.1-r2
-RUN pip3 install azure-cli==${AZ_CLI_VERSION}
+RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 
 # Build final image
 FROM alpine:3.9.4
