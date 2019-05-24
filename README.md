@@ -7,17 +7,15 @@
 ## Availables Docker image tags
 Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
 
-One images uses [Debian](https://hub.docker.com/_/debian) and the other one uses [Alpine](https://hub.docker.com/_/alpine) as a base.
+[Debian](https://hub.docker.com/_/debian) based images ([debian.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)):
 
-Debian-based images ([debian.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)):
+* zenika/terraform-azure-cli:latest-latest - build on master branch
+* zenika/terraform-azure-cli:X.Y-debian - build on repository tags
 
-* zenika/terraform-azure-cli:latest-latest - latest image build on master branch
-* zenika/terraform-azure-cli:X.Y-debian - versionned image build on repository tags
+[Alpine](https://hub.docker.com/_/alpine) based images ([alpine.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)):
 
-Alpine-based images ([alpine.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)):
-
-* zenika/terraform-azure-cli:alpine-latest - latest image build on master branch
-* zenika/terraform-azure-cli:X.Y-alpine - versionned image build on repository tags
+* zenika/terraform-azure-cli:alpine-latest - build on master branch
+* zenika/terraform-azure-cli:X.Y-alpine - build on repository tags
 
 > Git repository tag naming convention: `/^([0-9.]+)$/`
 
@@ -30,8 +28,8 @@ The goal is to create a **functional**, **minimalist** and **lightweight** image
 ## What's inside ?
 Tools included:
 
-* Azure CLI **v2.0.64**
-* Terraform CLI **v0.11.13**
+* [Azure CLI](https://azure.microsoft.com), see available version on the [pip repository](https://pypi.org/project/azure-cli/)
+* [Terraform CLI](https://www.terraform.io/), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 
 <p align="center">
   <a href="https://azure.microsoft.com"><img width="200" src="resources/azure-logo.png"></a>
@@ -49,16 +47,29 @@ docker container run -it --rm zenika/terraform-azure-cli:alpine-latest
 > The `--rm` flag will completely destroy the container and its data on exit.
 
 ### Build the image
-You can build the image locally directly from the Dockerfiles:
+You can build the image locally directly from the Dockerfiles.
+
 ```bash
-# build the Debian based image:
+# Build the Debian based image:
 docker image build -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
 
-# build the Alpine based image:
+# Build the Alpine based image:
 docker image build -f alpine.Dockerfile -t zenika/terraform-azure-cli:alpine .
 ```
 
-> You can use [Docker build arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) to  set custom Terraform & Azure CLI version.
+Optionally, it is possible to choose the tools desired versions using [Docker builds arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) :
+
+```bash
+# Set tools desired versions
+AZURE_CLI_VERSION=2.0.65
+TERRAFORM_VERSION=0.12.0
+
+# Build the Debian based image:
+docker image build --build-arg AZURE_CLI_VERSION=$AZURE_CLI_VERSION --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
+
+# Build the Alpine based image:
+docker image build --build-arg AZURE_CLI_VERSION=$AZURE_CLI_VERSION --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION -f alpine.Dockerfile -t zenika/terraform-azure-cli:alpine .
+```
 
 ## Roadmap & Contributions
 Please refer to the [github project](https://github.com/Zenika/terraform-azure-cli/projects/1) to track new features.
