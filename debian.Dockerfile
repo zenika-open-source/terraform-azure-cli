@@ -36,4 +36,5 @@ COPY --from=terraform /terraform /usr/local/bin/terraform
 COPY --from=azure-cli-pip /usr/local/bin/az* /usr/local/bin/
 COPY --from=azure-cli-pip /usr/local/lib/python3.5/dist-packages /usr/local/lib/python3.5/dist-packages
 COPY --from=azure-cli-pip /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages
+WORKDIR /workspace
 CMD ["bash"]

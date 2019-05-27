@@ -32,5 +32,6 @@ RUN apk --no-cache add python3=3.6.8-r2 bash=4.4.19-r1 \
   && ln -s /usr/bin/python3 /usr/bin/python
 COPY --from=terraform /terraform /usr/bin/terraform
 COPY --from=azure-cli /usr/bin/az* /usr/bin/
-COPY --from=azure-cli /usr/lib/python3.6/site-packages /usr/lib/python3.6/site-packages 
+COPY --from=azure-cli /usr/lib/python3.6/site-packages /usr/lib/python3.6/site-packages
+WORKDIR /workspace
 CMD ["bash"]
