@@ -26,7 +26,7 @@ But they all are quite oversized.
 
 The goal is to create a **functional**, **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
 
-This image gives you the flexibility to be used for devlopement or as a base image as you see fits.
+This image gives you the flexibility to be used for development or as a base image as you see fits.
 
 ## What's inside ?
 Tools included:
