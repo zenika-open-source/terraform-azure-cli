@@ -2,4 +2,3 @@
 # (each file needed in the Dockefile need to be included manually)
 *
 !hashicorp.asc
-!terraform_0.11.14_SHA256SUMS.sig
