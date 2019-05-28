@@ -28,7 +28,7 @@ RUN pip3 install cryptography==2.6.1
 FROM debian:stretch-20190506-slim
 RUN apt-get update --no-install-recommends \
   # TODO: Handle potential download issue when adding multiples packages with APT
-  && apt-get install -y python3=3.5.3-1 \
+  && apt-get install -y python3=3.5.3-1 ca-certificates=20161130+nmu1+deb9u1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && ln -s /usr/bin/python3 /usr/bin/python
