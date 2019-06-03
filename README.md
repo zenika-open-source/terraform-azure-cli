@@ -9,12 +9,13 @@ Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.doc
 
 [Debian](https://hub.docker.com/_/debian) based images ([debian.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)):
 
-* zenika/terraform-azure-cli:latest-latest - build on master branch
+* zenika/terraform-azure-cli:latest-debian - build on master branch
 * zenika/terraform-azure-cli:X.Y-debian - build on repository tags
 
 [Alpine](https://hub.docker.com/_/alpine) based images ([alpine.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)):
 
-* zenika/terraform-azure-cli:alpine-latest - build on master branch
+* zenika/terraform-azure-cli:latest - build on master branch (default image tag)
+* zenika/terraform-azure-cli:latest-alpine - build on master branch
 * zenika/terraform-azure-cli:X.Y-alpine - build on repository tags
 
 > Git repository tag naming convention: `/^([0-9.]+)$/`
@@ -25,6 +26,8 @@ But they all are quite oversized.
 
 The goal is to create a **functional**, **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
 
+This image gives you the flexibility to be used for development or as a base image as you see fits.
+
 ## What's inside ?
 Tools included:
 
@@ -32,17 +35,17 @@ Tools included:
 * [Terraform CLI](https://www.terraform.io/docs/commands/index.html), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 
 <p align="center">
-  <a href="https://azure.microsoft.com"><img width="200" src="resources/azure-logo.png"></a>
-  <a href="https://www.terraform.io/"><img width="200" src="resources/terraform-logo.png"></a>
+  <a href="https://azure.microsoft.com"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/azure-logo.png"></a>
+  <a href="https://www.terraform.io/"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/terraform-logo.png"></a>
 </p>
 
 ## Usage
 
 ### Launch the CLI
-Simply launch the container and use the CLI as you would on any other platform, for instance using the *alpine* based image:
+Simply launch the container and use the CLI as you would on any other platform, for instance using the latest *alpine* based image:
 
 ```bash
-docker container run -it --rm zenika/terraform-azure-cli:alpine-latest
+docker container run -it --rm -v ${PWD}:/workspace zenika/terraform-azure-cli:latest
 ```
 
 > The `--rm` flag will completely destroy the container and its data on exit.

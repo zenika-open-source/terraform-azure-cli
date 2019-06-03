@@ -35,9 +35,10 @@ RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 
 # Build final image
 FROM alpine:3.9.4
-RUN apk --no-cache add python3=3.6.8-r2 bash=4.4.19-r1 \
+RUN apk --no-cache add python3=3.6.8-r2 bash=4.4.19-r1 ca-certificates=20190108-r0 \
   && ln -s /usr/bin/python3 /usr/bin/python
 COPY --from=terraform /terraform /usr/bin/terraform
 COPY --from=azure-cli /usr/bin/az* /usr/bin/
-COPY --from=azure-cli /usr/lib/python3.6/site-packages /usr/lib/python3.6/site-packages 
+COPY --from=azure-cli /usr/lib/python3.6/site-packages /usr/lib/python3.6/site-packages
+WORKDIR /workspace
 CMD ["bash"]
