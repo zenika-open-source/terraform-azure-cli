@@ -5,7 +5,6 @@ ARG TERRAFORM_VERSION=0.11.14
 # Download Terraform binary
 FROM alpine:3.9.4 as terraform
 ARG TERRAFORM_VERSION
-ENV TERRAFORM_SHA256SUM=9b9a4492738c69077b079e595f5b2a9ef1bc4e8fb5596610f69a6f322a8af8dd
 RUN apk update
 RUN apk add curl=7.64.0-r1
 RUN apk add unzip=6.0-r4
