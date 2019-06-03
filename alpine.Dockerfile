@@ -16,7 +16,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 COPY hashicorp.asc hashicorp.asc
 RUN gpg --import hashicorp.asc
 RUN gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS
-RUN echo "${TERRAFORM_SHA256SUM}  terraform_${TERRAFORM_VERSION}_linux_amd64.zip" | sha256sum -c -
+RUN grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS | sha256sum -c -
 RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install az CLI using PIP
