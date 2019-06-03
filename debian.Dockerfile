@@ -5,7 +5,6 @@ ARG TERRAFORM_VERSION=0.11.14
 # Download Terraform binary
 FROM debian:stretch-20190506-slim as terraform
 ARG TERRAFORM_VERSION
-ENV TERRAFORM_SHA256SUM=9b9a4492738c69077b079e595f5b2a9ef1bc4e8fb5596610f69a6f322a8af8dd
 RUN apt-get update
 RUN apt-get install -y curl=7.52.1-5+deb9u9
 RUN apt-get install -y unzip=6.0-21+deb9u1
@@ -16,7 +15,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 COPY hashicorp.asc hashicorp.asc
 RUN gpg --import hashicorp.asc
 RUN gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS
-RUN echo "${TERRAFORM_SHA256SUM}  terraform_${TERRAFORM_VERSION}_linux_amd64.zip" | sha256sum -c -
+RUN sha256sum -c --ignore-missing terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install az CLI using PIP

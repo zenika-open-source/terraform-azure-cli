@@ -28,8 +28,8 @@ The goal is to create a **functional**, **minimalist** and **lightweight** image
 ## What's inside ?
 Tools included:
 
-* [Azure CLI](https://azure.microsoft.com), see available version on the [pip repository](https://pypi.org/project/azure-cli/)
-* [Terraform CLI](https://www.terraform.io/), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
+* [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest), see available version on the [pip repository](https://pypi.org/project/azure-cli/)
+* [Terraform CLI](https://www.terraform.io/docs/commands/index.html), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 
 <p align="center">
   <a href="https://azure.microsoft.com"><img width="200" src="resources/azure-logo.png"></a>
@@ -40,6 +40,7 @@ Tools included:
 
 ### Launch the CLI
 Simply launch the container and use the CLI as you would on any other platform, for instance using the *alpine* based image:
+
 ```bash
 docker container run -it --rm zenika/terraform-azure-cli:alpine-latest
 ```
