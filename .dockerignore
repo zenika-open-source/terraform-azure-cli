@@ -1,3 +1,4 @@
 # explicitely exclude all files from the build context
 # (each file needed in the Dockefile need to be included manually)
 *
+!hashicorp.asc

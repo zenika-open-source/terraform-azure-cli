@@ -8,9 +8,15 @@ ARG TERRAFORM_VERSION
 RUN apk update
 RUN apk add curl=7.64.0-r1
 RUN apk add unzip=6.0-r4
-RUN curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform-${TERRAFORM_VERSION}.zip
-# FIXME: validate terraform signature & checksum
-RUN unzip -j terraform-${TERRAFORM_VERSION}.zip
+RUN apk add gnupg=2.2.12-r0
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
+COPY hashicorp.asc hashicorp.asc
+RUN gpg --import hashicorp.asc
+RUN gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS
+RUN grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS | sha256sum -c -
+RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install az CLI using PIP
 FROM alpine:3.9.4 as azure-cli
@@ -28,7 +34,10 @@ RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 
 # Build final image
 FROM alpine:3.9.4
-RUN apk --no-cache add python3=3.6.8-r2 bash=4.4.19-r1 ca-certificates=20190108-r0 \
+RUN apk --no-cache add \
+    bash=4.4.19-r1 \
+    ca-certificates=20190108-r0 \
+    python3=3.6.8-r2 \
   && ln -s /usr/bin/python3 /usr/bin/python
 COPY --from=terraform /terraform /usr/bin/terraform
 COPY --from=azure-cli /usr/bin/az* /usr/bin/

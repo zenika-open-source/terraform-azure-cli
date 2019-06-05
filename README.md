@@ -31,8 +31,8 @@ This image gives you the flexibility to be used for development or as a base ima
 ## What's inside ?
 Tools included:
 
-* [Azure CLI](https://azure.microsoft.com), see available version on the [pip repository](https://pypi.org/project/azure-cli/)
-* [Terraform CLI](https://www.terraform.io/), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
+* [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest), see available version on the [pip repository](https://pypi.org/project/azure-cli/)
+* [Terraform CLI](https://www.terraform.io/docs/commands/index.html), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 
 <p align="center">
   <a href="https://azure.microsoft.com"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/azure-logo.png"></a>

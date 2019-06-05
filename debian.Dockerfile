@@ -8,9 +8,15 @@ ARG TERRAFORM_VERSION
 RUN apt-get update
 RUN apt-get install -y curl=7.52.1-5+deb9u9
 RUN apt-get install -y unzip=6.0-21+deb9u1
-RUN curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform-${TERRAFORM_VERSION}.zip
-# FIXME: validate terraform signature & checksum
-RUN unzip -j terraform-${TERRAFORM_VERSION}.zip
+RUN apt-get install -y gnupg=2.1.18-8~deb9u4
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
+COPY hashicorp.asc hashicorp.asc
+RUN gpg --import hashicorp.asc
+RUN gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS
+RUN grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS | sha256sum -c -
+RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install az CLI using PIP
 FROM debian:stretch-20190506-slim as azure-cli-pip
@@ -26,9 +32,10 @@ RUN pip3 install cryptography==2.6.1
 
 # Build final image
 FROM debian:stretch-20190506-slim
-RUN apt-get update --no-install-recommends \
-  # TODO: Handle potential download issue when adding multiples packages with APT
-  && apt-get install -y python3=3.5.3-1 ca-certificates=20161130+nmu1+deb9u1 \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    ca-certificates=20161130+nmu1+deb9u1 \
+    python3=3.5.3-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && ln -s /usr/bin/python3 /usr/bin/python
