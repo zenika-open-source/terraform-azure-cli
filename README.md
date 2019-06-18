@@ -4,27 +4,22 @@
 
 # Terraform and Azure CLI Docker image
 
-## Availables Docker image tags
+## Supported tags and respective Dockerfile links
 Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
 
-[Debian](https://hub.docker.com/_/debian) based images ([debian.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)):
-
-* zenika/terraform-azure-cli:latest-debian - build on master branch
-* zenika/terraform-azure-cli:X.Y-debian - build on repository tags
-
-[Alpine](https://hub.docker.com/_/alpine) based images ([alpine.Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)):
-
-* zenika/terraform-azure-cli:latest - build on master branch (default image tag)
-* zenika/terraform-azure-cli:latest-alpine - build on master branch
-* zenika/terraform-azure-cli:X.Y-alpine - build on repository tags
-
-> Git repository tag naming convention: `/^([0-9.]+)$/`
+* [zenika/terraform-azure-cli:latest](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)
+* [zenika/terraform-azure-cli:latest-debian](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)
+* [zenika/terraform-azure-cli:2.1-alpine](https://github.com/Zenika/terraform-azure-cli/blob/2.1/alpine.Dockerfile)
+* [zenika/terraform-azure-cli:2.1-debian](https://github.com/Zenika/terraform-azure-cli/blob/2.1/debian.Dockerfile)
+* [zenika/terraform-azure-cli:2.0-alpine](https://github.com/Zenika/terraform-azure-cli/blob/2.0/alpine.Dockerfile)
+* [zenika/terraform-azure-cli:2.0-debian](https://github.com/Zenika/terraform-azure-cli/blob/2.0/debian.Dockerfile)
+* [zenika/terraform-azure-cli:1.0](https://github.com/Zenika/terraform-azure-cli/blob/v1.0/Dockerfile) - Debian only
 
 ## Motivation
 Many Docker images including the Terraform and Azure CLI already exist out there, both on the Docker Hub and Github.
 But they all are quite oversized.
 
-The goal is to create a **functional**, **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
+The goal is to create a **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
 
 This image gives you the flexibility to be used for development or as a base image as you see fits.
 
@@ -54,11 +49,11 @@ docker container run -it --rm -v ${PWD}:/workspace zenika/terraform-azure-cli:la
 You can build the image locally directly from the Dockerfiles.
 
 ```bash
-# Build the Debian based image:
-docker image build -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
-
 # Build the Alpine based image:
 docker image build -f alpine.Dockerfile -t zenika/terraform-azure-cli:alpine .
+
+# Build the Debian based image:
+docker image build -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
 ```
 
 Optionally, it is possible to choose the tools desired versions using [Docker builds arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) :
