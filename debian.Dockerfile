@@ -32,13 +32,14 @@ RUN pip3 install cryptography==2.6.1
 
 # Build final image
 FROM debian:stretch-20190506-slim
+ENV PYTHON_MAJOR_VERSION=3.5
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates=20161130+nmu1+deb9u1 \
-    python3=3.5.3-1 \
+    python3=${PYTHON_MAJOR_VERSION}.3-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
-  && ln -s /usr/bin/python3 /usr/bin/python
+  && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
 COPY --from=terraform /terraform /usr/local/bin/terraform
 COPY --from=azure-cli-pip /usr/local/bin/az* /usr/local/bin/
 COPY --from=azure-cli-pip /usr/local/lib/python3.5/dist-packages /usr/local/lib/python3.5/dist-packages
