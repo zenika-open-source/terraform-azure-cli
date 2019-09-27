@@ -46,28 +46,22 @@ docker container run -it --rm -v ${PWD}:/workspace zenika/terraform-azure-cli:la
 > The `--rm` flag will completely destroy the container and its data on exit.
 
 ### Build the image
-You can build the image locally directly from the Dockerfiles.
+You can build the image locally directly from the Dockerfiles, using the build script:
 
 ```bash
-# Build the Alpine based image:
-docker image build -f alpine.Dockerfile -t zenika/terraform-azure-cli:alpine .
-
-# Build the Debian based image:
-docker image build -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
+# launch build script
+./dev-build.sh
 ```
 
 Optionally, it is possible to choose the tools desired versions using [Docker builds arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) :
 
 ```bash
 # Set tools desired versions
-AZURE_CLI_VERSION=2.0.65
-TERRAFORM_VERSION=0.12.0
+AZURE_CLI_VERSION=2.0.74
+TERRAFORM_VERSION=0.12.9
 
-# Build the Debian based image:
-docker image build --build-arg AZURE_CLI_VERSION=$AZURE_CLI_VERSION --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION -f debian.Dockerfile -t zenika/terraform-azure-cli:debian .
-
-# Build the Alpine based image:
-docker image build --build-arg AZURE_CLI_VERSION=$AZURE_CLI_VERSION --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION -f alpine.Dockerfile -t zenika/terraform-azure-cli:alpine .
+# launch the build script with parameters
+./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
 ```
 
 ## Roadmap & Contributions
