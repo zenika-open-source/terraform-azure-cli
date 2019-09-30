@@ -6,9 +6,9 @@ ARG TERRAFORM_VERSION=0.12.9
 FROM debian:stretch-20190506-slim as terraform
 ARG TERRAFORM_VERSION
 RUN apt-get update
-RUN apt-get install -y curl=7.52.1-5+deb9u9
-RUN apt-get install -y unzip=6.0-21+deb9u2
-RUN apt-get install -y gnupg=2.1.18-8~deb9u4
+RUN apt-get install -y curl=7.52.1-5+deb9u9 --no-install-recommends
+RUN apt-get install -y unzip=6.0-21+deb9u2 --no-install-recommends
+RUN apt-get install -y gnupg=2.1.18-8~deb9u4 --no-install-recommends
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
@@ -22,8 +22,8 @@ RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 FROM debian:stretch-20190506-slim as azure-cli-pip
 ARG AZURE_CLI_VERSION
 RUN apt-get update
-RUN apt-get install -y python3=3.5.3-1
-RUN apt-get install -y python3-pip=9.0.1-2+deb9u1
+RUN apt-get install -y python3=3.5.3-1 --no-install-recommends
+RUN apt-get install -y python3-pip=9.0.1-2+deb9u1 --no-install-recommends
 RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 # Fix an pyOpenSSL package issue... (see https://github.com/erjosito/ansible-azure-lab/issues/5)
 RUN pip3 uninstall -y pyOpenSSL cryptography

@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: hadolint/hadolint:v1.17.2-debian
+    steps:
+      - checkout
+      - run:
+          name: Lint dockerfile
+          command: hadolint debian.Dockerfile --ignore DL4006
