@@ -1,12 +1,12 @@
 # Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.0.66
-ARG TERRAFORM_VERSION=0.12.2
+ARG AZURE_CLI_VERSION=2.0.74
+ARG TERRAFORM_VERSION=0.12.9
 
 # Download Terraform binary
 FROM alpine:3.9.4 as terraform
 ARG TERRAFORM_VERSION
 RUN apk update
-RUN apk add curl=7.64.0-r2
+RUN apk add curl=7.64.0-r3
 RUN apk add unzip=6.0-r4
 RUN apk add gnupg=2.2.12-r0
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
@@ -26,7 +26,7 @@ RUN apk add python3=3.6.8-r2
 RUN apk add python3-dev=3.6.8-r2
 RUN apk add py3-setuptools=40.6.3-r0
 RUN apk add gcc=8.3.0-r0
-RUN apk add musl-dev=1.1.20-r4
+RUN apk add musl-dev=1.1.20-r5
 RUN apk add libffi-dev=3.2.1-r6
 RUN apk add openssl-dev=1.1.1b-r1
 RUN apk add make=4.2.1-r2

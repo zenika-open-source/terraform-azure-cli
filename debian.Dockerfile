@@ -1,13 +1,13 @@
 # Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.0.66
-ARG TERRAFORM_VERSION=0.12.2
+ARG AZURE_CLI_VERSION=2.0.74
+ARG TERRAFORM_VERSION=0.12.9
 
 # Download Terraform binary
 FROM debian:stretch-20190506-slim as terraform
 ARG TERRAFORM_VERSION
 RUN apt-get update
 RUN apt-get install -y curl=7.52.1-5+deb9u9
-RUN apt-get install -y unzip=6.0-21+deb9u1
+RUN apt-get install -y unzip=6.0-21+deb9u2
 RUN apt-get install -y gnupg=2.1.18-8~deb9u4
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -28,17 +28,18 @@ RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 # Fix an pyOpenSSL package issue... (see https://github.com/erjosito/ansible-azure-lab/issues/5)
 RUN pip3 uninstall -y pyOpenSSL cryptography
 RUN pip3 install pyOpenSSL==19.0.0
-RUN pip3 install cryptography==2.6.1
+RUN pip3 install cryptography==2.7
 
 # Build final image
 FROM debian:stretch-20190506-slim
+ENV PYTHON_MAJOR_VERSION=3.5
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates=20161130+nmu1+deb9u1 \
-    python3=3.5.3-1 \
+    python3=${PYTHON_MAJOR_VERSION}.3-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
-  && ln -s /usr/bin/python3 /usr/bin/python
+  && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
 COPY --from=terraform /terraform /usr/local/bin/terraform
 COPY --from=azure-cli-pip /usr/local/bin/az* /usr/local/bin/
 COPY --from=azure-cli-pip /usr/local/lib/python3.5/dist-packages /usr/local/lib/python3.5/dist-packages
