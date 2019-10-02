@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eo pipefail 
+
 if [ -f /.dockerenv ]; then
   hadolint alpine.Dockerfile
   hadolint debian.Dockerfile

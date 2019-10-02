@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  lint:
     docker:
       - image: hadolint/hadolint:v1.17.2-debian
     steps:
@@ -8,3 +8,35 @@ jobs:
       - run:
           name: Lint dockerfile
           command: ./scripts/lint.sh
+  build:
+    environment:
+      IMAGE_NAME: zenika/terraform-azure-clu
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:latest .
+  publish-latest:
+    environment:
+      IMAGE_NAME: building-on-ci
+    context: docker-hub
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:latest
+workflows:
+  version: 2
+  test-and-build:
+    jobs:
+      - lint
+      - build:
+          filters:
+            branches:
+              only: master
