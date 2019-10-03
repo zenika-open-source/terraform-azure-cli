@@ -27,7 +27,7 @@ RUN apk add py3-setuptools=40.6.3-r0 --no-cache
 RUN apk add gcc=8.3.0-r0 --no-cache
 RUN apk add musl-dev=1.1.20-r5 --no-cache
 RUN apk add libffi-dev=3.2.1-r6 --no-cache
-RUN apk add openssl-dev=1.1.1b-r1 --no-cache
+RUN apk add openssl-dev=1.1.1d-r0 --no-cache
 RUN apk add make=4.2.1-r2 --no-cache
 RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 
