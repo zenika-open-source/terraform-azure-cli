@@ -17,8 +17,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t zenika/terraform-azure-cli:latest-debian -f debian.Dockerfile .
-            docker build -t zenika/terraform-azure-cli:latest-alpine -f alpine.Dockerfile .
+            docker build -t zenika/terraform-azure-cli:latest .
   build-tag:
     docker:
       - image: circleci/buildpack-deps:stretch
@@ -28,8 +27,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t zenika/terraform-azure-cli:$CIRCLE_TAG-debian -f debian.Dockerfile .
-            docker build -t zenika/terraform-azure-cli:$CIRCLE_TAG-alpine -f alpine.Dockerfile .
+            docker build -t zenika/terraform-azure-cli:$CIRCLE_TAG .
   publish-latest:
     environment:
       IMAGE_NAME: building-on-ci
@@ -42,10 +40,8 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-            docker push zenika/terraform-azure-cli:latest-alpine
-            docker push zenika/terraform-azure-cli:latest-debian
-            docker push zenika/terraform-azure-cli:$CIRCLE_TAG-alpine
-            docker push zenika/terraform-azure-cli:$CIRCLE_TAG-debian
+            docker push zenika/terraform-azure-cli:latest
+            docker push zenika/terraform-azure-cli:$CIRCLE_TAG
 workflows:
   version: 2
   test-and-build:
