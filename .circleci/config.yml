@@ -59,7 +59,7 @@ workflows:
             - lint
           filters:
             tags:
-              only: /v?[0-9]+\.[0-9]+/
+              only: /[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
       - publish:
@@ -68,6 +68,6 @@ workflows:
             - build-tag
           filters:
             tags:
-              only: /v?[0-9]+\.[0-9]+/
+              only: /[0-9]+\.[0-9]+/
             branches:
               ignore: /.*/
