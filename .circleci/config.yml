@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Load Docker image
           command: |
-            docker image load workspace/terraform-azure-cli.tar
+            docker image load --input workspace/terraform-azure-cli.tar
       - run:
           name: Publish latest Docker Image to Docker Hub
           command: |
