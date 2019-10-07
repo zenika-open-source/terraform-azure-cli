@@ -31,7 +31,6 @@ jobs:
   publish-latest:
     environment:
       IMAGE_NAME: building-on-ci
-    context: docker-hub
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
@@ -59,11 +58,12 @@ workflows:
             branches:
               ignore: /.*/
       - publish-latest:
+          context: docker-hub
           requires:
             - build
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - publish-tag:
           context: docker-hub
           requires:
