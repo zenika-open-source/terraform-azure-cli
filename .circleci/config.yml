@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Load Docker image
           command: |
-            docker image load --input workspace/terraform-azure-cli.tar
+            docker image load --input workspace/terraform-azure-cli-latest.tar
       - run:
           name: Publish latest Docker Image to Docker Hub
           command: |
@@ -102,9 +102,9 @@ workflows:
           context: docker-hub
           requires:
             - build
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - publish-tag:
           context: docker-hub
           requires:
