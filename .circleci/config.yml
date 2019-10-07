@@ -21,6 +21,7 @@ jobs:
       - run:
           name: Save Docker image
           command: |
+            mkdir workspace
             docker image save --output workspace/terraform-azure-cli.tar zenika/terraform-azure-cli:latest
       - persist_to_workspace:
           root: workspace
