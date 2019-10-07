@@ -21,9 +21,9 @@ jobs:
       - run:
           name: Save Docker image
           command: |
-            docker image save --output terraform-azure-cli.tar zenika/terraform-azure-cli:latest
+            docker image save --output workspace/terraform-azure-cli.tar zenika/terraform-azure-cli:latest
       - persist_to_workspace:
-          root: ~/
+          root: workspace
           paths:
             - terraform-azure-cli.tar
   build-tag:
@@ -44,11 +44,11 @@ jobs:
     steps:
       - setup_remote_docker
       - attach_workspace:
-          at: ~/
+          at: workspace
       - run:
           name: Load Docker image
           command: |
-            docker image load terraform-azure-cli.tar
+            docker image load workspace/terraform-azure-cli.tar
       - run:
           name: Publish latest Docker Image to Docker Hub
           command: |
