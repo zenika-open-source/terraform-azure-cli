@@ -102,9 +102,9 @@ workflows:
           context: docker-hub
           requires:
             - build
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
       - publish-tag:
           context: docker-hub
           requires:
