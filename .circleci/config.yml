@@ -5,6 +5,8 @@ jobs:
       - image: hadolint/hadolint:v1.17.2-debian
     steps:
       - checkout
+      - run: apt-get update
+      - run: apt-get install -y ca-certificates
       - run:
           name: Lint dockerfile
           command: |
