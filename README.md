@@ -7,7 +7,7 @@
 ## Supported tags and respective Dockerfile links
 Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
 
-* [zenika/terraform-azure-cli:latest](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)
+* [zenika/terraform-azure-cli:latest](https://github.com/Zenika/terraform-azure-cli/blob/master/Dockerfile)
 * [zenika/terraform-azure-cli:3.0-alpine](https://github.com/Zenika/terraform-azure-cli/blob/3.0/alpine.Dockerfile)
 * [zenika/terraform-azure-cli:3.0-debian](https://github.com/Zenika/terraform-azure-cli/blob/3.0/debian.Dockerfile)
 * [zenika/terraform-azure-cli:2.1-alpine](https://github.com/Zenika/terraform-azure-cli/blob/2.1/alpine.Dockerfile)
