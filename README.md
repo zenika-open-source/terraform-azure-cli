@@ -1,4 +1,4 @@
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
+[![CircleCI](https://circleci.com/gh/Zenika/terraform-azure-cli.svg?style=svg)](https://circleci.com/gh/Zenika/terraform-azure-cli)
 [![](https://images.microbadger.com/badges/image/zenika/terraform-azure-cli.svg)](https://microbadger.com/images/zenika/terraform-azure-cli)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
@@ -8,12 +8,13 @@
 Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
 
 * [zenika/terraform-azure-cli:latest](https://github.com/Zenika/terraform-azure-cli/blob/master/alpine.Dockerfile)
-* [zenika/terraform-azure-cli:latest-debian](https://github.com/Zenika/terraform-azure-cli/blob/master/debian.Dockerfile)
 * [zenika/terraform-azure-cli:3.0-alpine](https://github.com/Zenika/terraform-azure-cli/blob/3.0/alpine.Dockerfile)
 * [zenika/terraform-azure-cli:3.0-debian](https://github.com/Zenika/terraform-azure-cli/blob/3.0/debian.Dockerfile)
 * [zenika/terraform-azure-cli:2.1-alpine](https://github.com/Zenika/terraform-azure-cli/blob/2.1/alpine.Dockerfile)
 * [zenika/terraform-azure-cli:2.1-debian](https://github.com/Zenika/terraform-azure-cli/blob/2.1/debian.Dockerfile)
 * [zenika/terraform-azure-cli:1.0](https://github.com/Zenika/terraform-azure-cli/blob/v1.0/Dockerfile) - Debian only
+
+:warning: alpine build support is deprecated, new versions will only be debian based.
 
 ## Motivation
 Many Docker images including the Terraform and Azure CLI already exist out there, both on the Docker Hub and Github.
