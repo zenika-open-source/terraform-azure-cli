@@ -11,7 +11,7 @@ jobs:
           name: Lint dockerfile
           command: |
             mkdir /tmp/linter
-            ./scripts/lint.sh 2> /tmp/linter/lint-error > /tmp/linter/lint-output
+            ./scripts/lint.sh 2>&1 | tee outfile /tmp/linter/output
 
       - store_artifacts:
           path: /tmp/linter
