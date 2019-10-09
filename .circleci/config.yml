@@ -5,9 +5,16 @@ jobs:
       - image: hadolint/hadolint:v1.17.2-debian
     steps:
       - checkout
+      - run: apt-get update
+      - run: apt-get install -y ca-certificates
       - run:
           name: Lint dockerfile
-          command: ./scripts/lint.sh
+          command: |
+            mkdir /tmp/linter
+            ./scripts/lint.sh 2>&1 | tee outfile /tmp/linter/output
+
+      - store_artifacts:
+          path: /tmp/linter
   build:
     docker:
       - image: circleci/buildpack-deps:stretch
