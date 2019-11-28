@@ -1,9 +1,9 @@
 # Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.0.74
-ARG TERRAFORM_VERSION=0.12.9
+ARG AZURE_CLI_VERSION=2.0.77
+ARG TERRAFORM_VERSION=0.12.16
 
 # Download Terraform binary
-FROM debian:buster-20190910-slim as terraform
+FROM debian:buster-20191118-slim as terraform
 ARG TERRAFORM_VERSION
 RUN apt-get update
 # hadolint ignore=DL3015
@@ -21,7 +21,7 @@ RUN grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VE
 RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install az CLI using PIP
-FROM debian:buster-20190910-slim as azure-cli-pip
+FROM debian:buster-20191118-slim as azure-cli-pip
 ARG AZURE_CLI_VERSION
 RUN apt-get update
 RUN apt-get install -y python3=3.7.3-1 --no-install-recommends
@@ -30,11 +30,11 @@ RUN apt-get install -y python3-pip=18.1-5
 RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 # Fix an pyOpenSSL package issue... (see https://github.com/erjosito/ansible-azure-lab/issues/5)
 RUN pip3 uninstall -y pyOpenSSL cryptography
-RUN pip3 install pyOpenSSL==19.0.0
-RUN pip3 install cryptography==2.7
+RUN pip3 install pyOpenSSL==19.1.0
+RUN pip3 install cryptography==2.8
 
 # Build final image
-FROM debian:buster-20190910-slim
+FROM debian:buster-20191118-slim
 ENV PYTHON_MAJOR_VERSION=3.7
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
