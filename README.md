@@ -2,9 +2,14 @@
 [![](https://images.microbadger.com/badges/image/zenika/terraform-azure-cli.svg)](https://microbadger.com/images/zenika/terraform-azure-cli)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
+<p align="center">
+  <a href="https://azure.microsoft.com"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/azure-logo.png"></a>
+  <a href="https://www.terraform.io/"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/terraform-logo.png"></a>
+</p>
+
 # Terraform and Azure CLI Docker image
 
-## Supported tags and respective Dockerfile links
+## :package: Supported tags and respective Dockerfile links
 Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli)
 
 * [zenika/terraform-azure-cli:latest](https://github.com/Zenika/terraform-azure-cli/blob/master/Dockerfile)
@@ -16,7 +21,7 @@ Repository available on Docker Hub: [zenika/terraform-azure-cli](https://hub.doc
 
 :warning: alpine build support is deprecated, new versions will only be debian based.
 
-## Motivation
+## :bulb: Motivation
 Many Docker images including the Terraform and Azure CLI already exist out there, both on the Docker Hub and Github.
 But they all are quite oversized.
 
@@ -24,18 +29,13 @@ The goal is to create a **minimalist** and **lightweight** image with these tool
 
 This image gives you the flexibility to be used for development or as a base image as you see fits.
 
-## What's inside ?
-Tools included:
+## :wrench: What's inside ?
 
 * [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest), see available version on the [pip repository](https://pypi.org/project/azure-cli/)
 * [Terraform CLI](https://www.terraform.io/docs/commands/index.html), see available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
+* [Git](https://git-scm.com/), see available versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
 
-<p align="center">
-  <a href="https://azure.microsoft.com"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/azure-logo.png"></a>
-  <a href="https://www.terraform.io/"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/terraform-logo.png"></a>
-</p>
-
-## Usage
+## :rocket: Usage
 
 ### Launch the CLI
 Simply launch the container and use the CLI as you would on any other platform, for instance using the latest *alpine* based image:
@@ -65,7 +65,10 @@ TERRAFORM_VERSION=0.12.9
 ./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
 ```
 
-## Roadmap & Contributions
+## :pray: Roadmap & Contributions
 Please refer to the [github project](https://github.com/Zenika/terraform-azure-cli/projects/1) to track new features.
 
 Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/terraform-azure-cli/issues) or [a PR](https://github.com/Zenika/terraform-azure-cli/pulls) !
+
+## :book: License
+This project is under the [Apache License 2.0](https://raw.githubusercontent.com/Zenika/terraform-azure-cli/master/LICENSE)
