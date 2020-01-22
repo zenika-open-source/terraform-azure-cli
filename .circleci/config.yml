@@ -87,7 +87,7 @@ jobs:
       - run:
           name: Publish tagged Docker Image to Docker Hub
           command: |
-            echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push zenika/terraform-azure-cli:$CIRCLE_TAG
 workflows:
   version: 2
@@ -106,14 +106,14 @@ workflows:
             branches:
               ignore: /.*/
       - publish-latest:
-          context: docker-hub
+          context: docker-hub-zenika
           requires:
             - build
           filters:
             branches:
               only: master
       - publish-tag:
-          context: docker-hub
+          context: docker-hub-zenika
           requires:
             - build
             - build-tag
