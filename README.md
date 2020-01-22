@@ -1,5 +1,4 @@
 [![CircleCI](https://circleci.com/gh/Zenika/terraform-azure-cli.svg?style=svg)](https://circleci.com/gh/Zenika/terraform-azure-cli)
-[![](https://images.microbadger.com/badges/image/zenika/terraform-azure-cli.svg)](https://microbadger.com/images/zenika/terraform-azure-cli)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
 <p align="center">
@@ -38,7 +37,7 @@ This image gives you the flexibility to be used for development or as a base ima
 ## :rocket: Usage
 
 ### Launch the CLI
-Simply launch the container and use the CLI as you would on any other platform, for instance using the latest *alpine* based image:
+Simply launch the container and use the CLI as you would on any other platform, for instance using the latest image:
 
 ```bash
 docker container run -it --rm -v ${PWD}:/workspace zenika/terraform-azure-cli:latest
