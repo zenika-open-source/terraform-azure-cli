@@ -2,7 +2,7 @@ version: 2
 jobs:
   lint:
     docker:
-      - image: hadolint/hadolint:v1.17.4-debian
+      - image: hadolint/hadolint:v1.17.5-debian
     steps:
       - checkout
       - run: apt-get update
