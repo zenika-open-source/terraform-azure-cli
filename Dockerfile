@@ -1,6 +1,6 @@
 # Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.0.77
-ARG TERRAFORM_VERSION=0.12.16
+ARG AZURE_CLI_VERSION=2.1.0
+ARG TERRAFORM_VERSION=0.12.21
 
 # Download Terraform binary
 FROM debian:buster-20191118-slim as terraform
