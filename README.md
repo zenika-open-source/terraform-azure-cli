@@ -40,7 +40,7 @@ This image gives you the flexibility to be used for development or as a base ima
 Simply launch the container and use the CLI as you would on any other platform, for instance using the latest image:
 
 ```bash
-docker container run -it --rm -v ${PWD}:/workspace zenika/terraform-azure-cli:latest
+docker container run -it --rm --mount type=bind,source="$(pwd)",target=/workspace zenika/terraform-azure-cli:latest
 ```
 
 > The `--rm` flag will completely destroy the container and its data on exit.
