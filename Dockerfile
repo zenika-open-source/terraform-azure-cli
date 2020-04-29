@@ -7,7 +7,7 @@ FROM debian:buster-20191118-slim as terraform
 ARG TERRAFORM_VERSION
 RUN apt-get update
 # hadolint ignore=DL3015
-RUN apt-get install -y curl=7.64.0-4
+RUN apt-get install -y curl=7.64.0-4+deb10u1
 RUN apt-get install -y unzip=6.0-23+deb10u1 --no-install-recommends
 RUN apt-get install -y gnupg=2.2.12-1+deb10u1 --no-install-recommends
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
