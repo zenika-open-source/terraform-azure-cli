@@ -4,7 +4,7 @@ ARG TERRAFORM_VERSION=0.12.24
 ARG PYTHON_MAJOR_VERSION=3.7
 
 # Download Terraform binary
-FROM debian:buster-20191118-slim as terraform
+FROM debian:buster-20191118-slim as terraform-cli
 ARG TERRAFORM_VERSION
 RUN apt-get update
 # hadolint ignore=DL3015
@@ -23,7 +23,7 @@ RUN grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VE
 RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install az CLI using PIP
-FROM debian:buster-20191118-slim as azure-cli-pip
+FROM debian:buster-20191118-slim as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
@@ -47,9 +47,9 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
-COPY --from=terraform /terraform /usr/local/bin/terraform
-COPY --from=azure-cli-pip /usr/local/bin/az* /usr/local/bin/
-COPY --from=azure-cli-pip /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages
-COPY --from=azure-cli-pip /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages
+COPY --from=terraform-cli /terraform /usr/local/bin/terraform
+COPY --from=azure-cli /usr/local/bin/az* /usr/local/bin/
+COPY --from=azure-cli /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages
+COPY --from=azure-cli /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages
 WORKDIR /workspace
 CMD ["bash"]
