@@ -3,8 +3,8 @@ name: release
 # trigger on tag
 on:
   push:
-    # tags:
-    #   - "*.*"
+    tags:
+      - "*.*"
 
 env:
   ORGANIZATION: "zenika"
