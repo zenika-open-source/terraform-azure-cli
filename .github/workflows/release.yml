@@ -45,7 +45,7 @@ jobs:
         run: echo "::set-env name=RELEASE_TAG::${GITHUB_REF##*/}"
 
       - name: Build and save image release tag
-        run: echo "::set-env name=IMAGE_RELEASE_TAG::r{$RELEASE_TAG}-${IMAGE_TAG}"
+        run: echo "::set-env name=IMAGE_RELEASE_TAG::r${RELEASE_TAG}-${IMAGE_TAG}"
 
       - name: Build image
         run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=$TF_VERSION --build-arg AWS_CLI_VERSION=$AWS_CLI_VERSIOIN --tag $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
