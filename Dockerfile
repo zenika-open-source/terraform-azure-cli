@@ -27,6 +27,7 @@ FROM debian:buster-20191118-slim as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
+RUN apt-get install -y python3-distutils
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.3-1
 RUN apt-get install -y --no-install-recommends python3-pip=18.1-5
 RUN pip3 install setuptools==46.1.3
