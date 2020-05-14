@@ -1,7 +1,6 @@
 [![build](https://github.com/Zenika/terraform-azure-cli/workflows/build/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Abuild)
 [![push-latest](https://github.com/Zenika/terraform-azure-cli/workflows/push-latest/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Apush-latest)
 [![release](https://github.com/Zenika/terraform-azure-cli/workflows/release/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Arelease)
-[![](https://images.microbadger.com/badges/image/zenika/terraform-azure-cli.svg)](https://microbadger.com/images/zenika/terraform-azure-cli)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
 <p align="center">

@@ -32,6 +32,7 @@ jobs:
         versions:
           - { tf_version: "0.11.14", awscli_version: "2.5.1" }
           - { tf_version: "0.12.24", awscli_version: "2.5.1" }
+          - { tf_version: "0.12.25", awscli_version: "2.5.1" }
 
     env:
       TF_VERSION: ${{ matrix.versions.tf_version }}
@@ -58,7 +59,7 @@ jobs:
         run: docker push $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
 
       - name: Save image
-        run: docker image save -o $IMAGE_NAME-$RELEASE_TAG-$IMAGE_TAG.tar $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
+        run: docker image save -o $IMAGE_NAME-$IMAGE_RELEASE_TAG.tar $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2
