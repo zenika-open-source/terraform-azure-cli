@@ -1,6 +1,6 @@
 # Setup build arguments with default versions
 ARG AZURE_CLI_VERSION=2.5.1
-ARG TERRAFORM_VERSION=0.12.24
+ARG TERRAFORM_VERSION=0.12.25
 ARG PYTHON_MAJOR_VERSION=3.7
 
 # Download Terraform binary
