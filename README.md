@@ -35,7 +35,7 @@ This image gives you the flexibility to be used for development or as a base ima
   * Included version indicated in the image tag: `azcliXX.YY.ZZ`
   * Available versions on the [pip repository](https://pypi.org/project/azure-cli/)
 * [Terraform CLI](https://www.terraform.io/docs/commands/index.html):
-  * Included version indicated in the image tag: `tfcliXX.YY.ZZ`
+  * Included version indicated in the image tag: `tfXX.YY.ZZ`
   * Available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 * [Git](https://git-scm.com/)
   * Available versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
