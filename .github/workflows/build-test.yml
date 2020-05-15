@@ -75,4 +75,4 @@ jobs:
         uses: plexsystems/container-structure-test-action@v0.2.0
         with:
           image: ${{ env.ORGANIZATION }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH }}
-          config: tests/container-structure-test.yml
+          config: tests/container-structure-tests.yml
