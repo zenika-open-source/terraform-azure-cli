@@ -1,6 +1,6 @@
 name: push-latest
 
-# trigger on master
+# trigger on push to master
 on:
   push:
     branches:

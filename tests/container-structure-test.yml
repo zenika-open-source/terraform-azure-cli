@@ -1,0 +1,18 @@
+schemaVersion: "2.0.0"
+
+metadataTest:
+  labels:
+    - key: 'maintainer'
+      value: 'bgauduch@github'
+  cmd: ["bash"]
+  workdir: "/workspace"
+
+commandTests:
+  - name: "Check Terraform CLI version"
+    command: "terraform"
+    args: ["version"]
+    expectedOutput: ["Terraform v0.12.25"]
+  - name:  "Check Azure CLI version"
+    command: "az"
+    args: ["version"]
+    expectedOutput: ["\"azure-cli\": \"2.5.1\""]
