@@ -38,6 +38,7 @@ RUN pip3 install cryptography==2.8
 
 # Build final image
 FROM debian:buster-20191118-slim
+LABEL maintainer="bgauduch@github"
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
