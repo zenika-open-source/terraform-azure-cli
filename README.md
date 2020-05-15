@@ -1,6 +1,8 @@
 [![build-test](https://github.com/Zenika/terraform-azure-cli/workflows/build-test/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Abuild-test)
 [![push-latest](https://github.com/Zenika/terraform-azure-cli/workflows/push-latest/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Apush-latest)
 [![release](https://github.com/Zenika/terraform-azure-cli/workflows/release/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Arelease)
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
 <p align="center">
@@ -52,11 +54,16 @@ docker container run -it --rm --mount type=bind,source="$(pwd)",target=/workspac
 > The `--rm` flag will completely destroy the container and its data on exit.
 
 ### Build the image
-You can build the image locally directly from the Dockerfiles, using the build script:
+You can build the image locally directly from the Dockerfile, using the build script.
+
+It will :
+* Lint the Dockerfile with [Hadolint](https://github.com/hadolint/hadolint);
+* Build and tag the image `zenika/terraform-azure-cli:dev`;
+* Execute [container structure tests](https://github.com/GoogleContainerTools/container-structure-test) on the image.
 
 ```bash
 # launch build script
-./scripts/dev-build.sh
+./dev-build.sh
 ```
 
 Optionally, it is possible to choose the tools desired versions using [Docker builds arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) :
@@ -67,7 +74,7 @@ AZURE_CLI_VERSION=2.5.1
 TERRAFORM_VERSION=0.12.24
 
 # launch the build script with parameters
-./scripts/dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
+./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
 ```
 
 ## 🙏 Roadmap & Contributions
