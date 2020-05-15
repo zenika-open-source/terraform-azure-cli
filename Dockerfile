@@ -7,7 +7,6 @@ ARG PYTHON_MAJOR_VERSION=3.7
 FROM debian:buster-20191118-slim as terraform-cli
 ARG TERRAFORM_VERSION
 RUN apt-get update
-# hadolint ignore=DL3015
 RUN apt-get install -y --no-install-recommends curl=7.64.0-4+deb10u1
 RUN apt-get install -y --no-install-recommends ca-certificates=20190110
 RUN apt-get install -y --no-install-recommends unzip=6.0-23+deb10u1
