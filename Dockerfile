@@ -27,7 +27,6 @@ FROM debian:buster-20191118-slim as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
-RUN apt-get install -y python3-distutils
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.3-1
 RUN apt-get install -y --no-install-recommends python3-pip=18.1-5
 RUN pip3 install setuptools==46.1.3
@@ -45,6 +44,7 @@ RUN apt-get update \
     ca-certificates=20190110 \
     git=1:2.20.1-2+deb10u3 \
     python3=${PYTHON_MAJOR_VERSION}.3-1 \
+    python3-distutils=3.7.3-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
