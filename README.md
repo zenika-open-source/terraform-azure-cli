@@ -21,9 +21,9 @@ The following image tag strategy is applied:
 * `zenika/terraform-azure-cli:rS.T-tfUU.VV.WW-azcliXX.YY.ZZ` - build from releases
   * `rS.T` is the release tag
   * `tfUU.VV.WWW` is the included Terraform CLI version
-  * `azcliXX.YY.ZZ` is the included AWS CLI version
+  * `azcliXX.YY.ZZ` is the included Azure CLI version
 
-Please report to the [releases page](https://github.com/Zenika/terraform-aws-cli/releases) for the changelogs. Any other tags are not supported.
+Please report to the [releases page](https://github.com/Zenika/terraform-azure-cli/releases) for the changelogs. Any other tags are not supported.
 
 ## 💡Motivation
 The goal is to create a **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
@@ -32,10 +32,10 @@ This image gives you the flexibility to be used for development or as a base ima
 
 ## 🔧 What's inside ?
 * [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest):
-  * Included version indicated in the image tag: `tfXX.YY.ZZ`
+  * Included version indicated in the image tag: `azcliXX.YY.ZZ`
   * Available versions on the [pip repository](https://pypi.org/project/azure-cli/)
 * [Terraform CLI](https://www.terraform.io/docs/commands/index.html):
-  * Included version indicated in the image tag: `awscliXX.YY.ZZ`
+  * Included version indicated in the image tag: `tfcliXX.YY.ZZ`
   * Available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 * [Git](https://git-scm.com/)
   * Available versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
