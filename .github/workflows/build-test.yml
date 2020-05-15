@@ -1,7 +1,7 @@
 name: build-test
 
 # trigger on any push
-# but not on master or tags
+# but not on master, tags or readme modifications
 on:
   push:
     tags-ignore:
@@ -9,6 +9,8 @@ on:
     branches:
       - "**"
       - "!master"
+    paths-ignore:
+      - "!README.md"
 
 env:
   ORGANIZATION: "zenika"
