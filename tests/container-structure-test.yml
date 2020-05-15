@@ -1,18 +1,14 @@
 schemaVersion: "2.0.0"
 
 metadataTest:
-  env:
-    - key: PYTHON_MAJOR_VERSION
-      value: 3.7
   labels:
     - key: 'maintainer'
       value: 'bgauduch@github'
-  cmd: ["/bin/bash"]
+  cmd: ["bash"]
   workdir: "/workspace"
 
 commandTests:
   - name: "Check Terraform CLI version"
-    setup: [["virtualenv", "/env"], ["pip", "install", "gunicorn", "flask"]]
     command: "terraform"
     args: ["version"]
     expectedOutput: ["Terraform v0.12.25"]
