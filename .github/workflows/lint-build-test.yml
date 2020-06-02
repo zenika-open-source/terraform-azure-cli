@@ -1,4 +1,4 @@
-name: build-test
+name: lint-build-test
 
 # trigger on any push
 # but not on master, tags or readme modifications
