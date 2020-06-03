@@ -29,14 +29,13 @@ jobs:
     strategy:
       matrix:
         versions:
-          - { tf_version: "0.11.14", awscli_version: "2.5.1" }
-          - { tf_version: "0.12.24", awscli_version: "2.5.1" }
-          - { tf_version: "0.12.25", awscli_version: "2.5.1" }
+          - { tf_version: "0.11.14", azcli_version: "2.7.0" }
+          - { tf_version: "0.12.26", azcli_version: "2.7.0" }
 
     env:
       TF_VERSION: ${{ matrix.versions.tf_version }}
-      AWS_CLI_VERSIOIN: ${{ matrix.versions.awscli_version }}
-      IMAGE_TAG: "tf${{ matrix.versions.tf_version }}-azcli${{ matrix.versions.awscli_version }}"
+      AWS_CLI_VERSIOIN: ${{ matrix.versions.azcli_version }}
+      IMAGE_TAG: "tf${{ matrix.versions.tf_version }}-azcli${{ matrix.versions.azcli_version }}"
 
     steps:
       - name: Check out the repo

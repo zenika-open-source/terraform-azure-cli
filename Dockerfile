@@ -1,6 +1,6 @@
 # Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.5.1
-ARG TERRAFORM_VERSION=0.12.25
+ARG AZURE_CLI_VERSION=2.7.0
+ARG TERRAFORM_VERSION=0.12.26
 ARG PYTHON_MAJOR_VERSION=3.7
 
 # Download Terraform binary
@@ -44,7 +44,7 @@ RUN apt-get update \
     ca-certificates=20190110 \
     git=1:2.20.1-2+deb10u3 \
     python3=${PYTHON_MAJOR_VERSION}.3-1 \
-    python3-distutils=3.7.3-1 \
+    python3-distutils=${PYTHON_MAJOR_VERSION}.3-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
