@@ -5,10 +5,6 @@ on:
   release:
     types: [published]
 
-env:
-  ORGANIZATION: "zenika"
-  IMAGE_NAME: "terraform-azure-cli"
-
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -28,15 +24,17 @@ jobs:
 
     strategy:
       matrix:
-        versions:
-          - { tf_version: "0.11.14", azcli_version: "2.8.0" }
-          - { tf_version: "0.12.26", azcli_version: "2.8.0" }
-          - { tf_version: "0.13.0-beta2", azcli_version: "2.8.0" }
+        tf_version:
+          - "0.11.14"
+          - "0.12.28"
+          - "0.13.0-beta2"
 
     env:
-      TF_VERSION: ${{ matrix.versions.tf_version }}
-      AWS_CLI_VERSIOIN: ${{ matrix.versions.azcli_version }}
-      IMAGE_TAG: "tf${{ matrix.versions.tf_version }}-azcli${{ matrix.versions.azcli_version }}"
+      ORGANIZATION: "zenika"
+      IMAGE_NAME: "terraform-azure-cli"
+      TERRAFORM_VERSION: ${{ matrix.tf_version }}
+      AZURE_CLI_VERSION: "2.8.0"
+      IMAGE_TAG: "terraform-${{ env.TF_VERSION }}_azcli${{ env.AZURE_CLI_VERSION }}"
 
     steps:
       - name: Check out the repo
@@ -46,19 +44,19 @@ jobs:
         run: echo "::set-env name=RELEASE_TAG::${GITHUB_REF##*/}"
 
       - name: Build and save image release tag
-        run: echo "::set-env name=IMAGE_RELEASE_TAG::r${RELEASE_TAG}-${IMAGE_TAG}"
+        run: echo "::set-env name=IMAGE_RELEASE_TAG::release-${RELEASE_TAG}_${IMAGE_TAG}"
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=$TF_VERSION --build-arg AWS_CLI_VERSION=$AWS_CLI_VERSIOIN --tag $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TERRAFORM_VERSION} --build-arg AZURE_CLI_VERSION=${AZURE_CLI_VERSION} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push image to registry
-        run: docker push $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
+        run: docker push ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Save image
-        run: docker image save -o $IMAGE_NAME-$IMAGE_RELEASE_TAG.tar $ORGANIZATION/$IMAGE_NAME:$IMAGE_RELEASE_TAG
+        run: docker image save -o ${IMAGE_NAME}-${IMAGE_RELEASE_TAG}.tar ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2
