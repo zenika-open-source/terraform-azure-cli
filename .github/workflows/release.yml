@@ -32,9 +32,7 @@ jobs:
     env:
       ORGANIZATION: "zenika"
       IMAGE_NAME: "terraform-azure-cli"
-      TERRAFORM_VERSION: ${{ matrix.tf_version }}
       AZURE_CLI_VERSION: "2.8.0"
-      IMAGE_TAG: "terraform-${{ env.TF_VERSION }}_azcli${{ env.AZURE_CLI_VERSION }}"
 
     steps:
       - name: Check out the repo
@@ -44,10 +42,10 @@ jobs:
         run: echo "::set-env name=RELEASE_TAG::${GITHUB_REF##*/}"
 
       - name: Build and save image release tag
-        run: echo "::set-env name=IMAGE_RELEASE_TAG::release-${RELEASE_TAG}_${IMAGE_TAG}"
+        run: echo "::set-env name=IMAGE_RELEASE_TAG::release-${RELEASE_TAG}_"terraform-${{ env.TF_VERSION }}_azcli${{ env.AZURE_CLI_VERSION }}""
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TERRAFORM_VERSION} --build-arg AZURE_CLI_VERSION=${AZURE_CLI_VERSION} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${AZURE_CLI_VERSION} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
