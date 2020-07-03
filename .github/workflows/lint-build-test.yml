@@ -34,7 +34,7 @@ jobs:
     needs: lint
 
     steps:
-      - name: Check out the repo
+      - name: Checkout the repo
         uses: actions/checkout@v2
 
       - name: Save branch name as env var
@@ -57,7 +57,7 @@ jobs:
     needs: build
 
     steps:
-      - name: Check out the repo
+      - name: Checkout the repo
         uses: actions/checkout@v2
 
       - name: Save branch name as env var
@@ -100,3 +100,6 @@ jobs:
           fail-build: true
           include-app-packages: true
           debug: true
+
+      - name: anchore inline scan JSON results
+        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
