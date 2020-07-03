@@ -18,10 +18,10 @@ Available image tags can be found on the Docker Hub registry: [zenika/terraform-
 The following image tag strategy is applied:
 * `zenika/terraform-azure-cli:latest` - build from master
   * Included CLI versions can be found in the [Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/Dockerfile)
-* `zenika/terraform-azure-cli:rS.T-tfUU.VV.WW-azcliXX.YY.ZZ` - build from releases
-  * `rS.T` is the release tag
-  * `tfUU.VV.WWW` is the included Terraform CLI version
-  * `azcliXX.YY.ZZ` is the included Azure CLI version
+* `zenika/terraform-azure-cli:release-S.T_terraform-UU.VV.WW_azcli-XX.YY.ZZ` - build from releases
+  * `release-S.T` is the release tag
+  * `terraform-UU.VV.WWW` is the included Terraform CLI version
+  * `azcli-XX.YY.ZZ` is the included Azure CLI version
 
 Please report to the [releases page](https://github.com/Zenika/terraform-azure-cli/releases) for the changelogs. Any other tags are not supported.
 
@@ -71,7 +71,7 @@ Optionally, it is possible to choose the tools desired versions using [Docker bu
 ```bash
 # Set tools desired versions
 AZURE_CLI_VERSION=2.8.0
-TERRAFORM_VERSION=0.12.26
+TERRAFORM_VERSION=0.12.28
 
 # launch the build script with parameters
 ./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
