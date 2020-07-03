@@ -99,3 +99,4 @@ jobs:
           image-reference: "${{ env.ORGANIZATION }}/{{ env.$IMAGE_NAME }}:{{ env.$BRANCH }}"
           fail-build: true
           include-app-packages: true
+          debug: true
