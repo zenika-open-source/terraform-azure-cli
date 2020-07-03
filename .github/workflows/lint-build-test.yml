@@ -57,8 +57,8 @@ jobs:
     needs: build
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@master
+      - name: Check out the repo
+        uses: actions/checkout@v2
 
       - name: Save branch name as env var
         run: echo "::set-env name=BRANCH::${GITHUB_REF##*/}"
@@ -76,3 +76,26 @@ jobs:
         with:
           image: ${{ env.ORGANIZATION }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH }}
           config: tests/container-structure-tests.yml
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Save branch name as env var
+        run: echo "::set-env name=BRANCH::${GITHUB_REF##*/}"
+
+      - name: Download image artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.IMAGE_NAME }}-${{ env.BRANCH }}
+
+      - name: Load image
+        run: docker image load --input $IMAGE_NAME-$BRANCH.tar
+
+      - name: Scan image
+        uses: anchore/scan-action@v1
+        with:
+          image-reference: "${{ env.ORGANIZATION }}/{{ env.$IMAGE_NAME }}:{{ env.$BRANCH }}"
+          fail-build: true
+          include-app-packages: true
