@@ -41,10 +41,10 @@ jobs:
         run: echo "::set-env name=BRANCH::${GITHUB_REF##*/}"
 
       - name: Build image
-        run: docker image build . --file Dockerfile --tag $ORGANIZATION/$IMAGE_NAME:$BRANCH
+        run: docker image build . --file Dockerfile --tag ${ORGANIZATION}/${IMAGE_NAME}:${BRANCH}
 
       - name: Save image
-        run: docker image save -o $IMAGE_NAME-$BRANCH.tar $ORGANIZATION/$IMAGE_NAME:$BRANCH
+        run: docker image save -o ${IMAGE_NAME}-${BRANCH}.tar ${ORGANIZATION}/${IMAGE_NAME}:${BRANCH}
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2
@@ -69,7 +69,7 @@ jobs:
           name: ${{ env.IMAGE_NAME }}-${{ env.BRANCH }}
 
       - name: Load image
-        run: docker image load --input $IMAGE_NAME-$BRANCH.tar
+        run: docker image load --input ${IMAGE_NAME}-${BRANCH}.tar
 
       - name: run structure tests
         uses: plexsystems/container-structure-test-action@v0.2.0
@@ -91,12 +91,12 @@ jobs:
           name: ${{ env.IMAGE_NAME }}-${{ env.BRANCH }}
 
       - name: Load image
-        run: docker image load --input $IMAGE_NAME-$BRANCH.tar
+        run: docker image load --input ${IMAGE_NAME}-${BRANCH}.tar
 
       - name: Scan image
         uses: anchore/scan-action@v1
         with:
-          image-reference: "${{ env.ORGANIZATION }}/{{ env.$IMAGE_NAME }}:{{ env.$BRANCH }}"
+          image-reference: "${{ env.ORGANIZATION }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH }}"
           fail-build: true
           include-app-packages: true
           debug: true
