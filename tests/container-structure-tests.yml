@@ -26,4 +26,4 @@ commandTests:
   - name:  "Check Azure CLI version"
     command: "az"
     args: ["version"]
-    expectedOutput: ["\"azure-cli\": \"2.8.0\""]
+    expectedOutput: ["\"azure-cli\": \"2.9.1\""]
