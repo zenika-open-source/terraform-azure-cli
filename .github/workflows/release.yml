@@ -31,6 +31,7 @@ jobs:
         azcli_version:
           - "2.8.0"
           - "2.9.1"
+          - "2.10.1"
 
     env:
       ORGANIZATION: "zenika"
