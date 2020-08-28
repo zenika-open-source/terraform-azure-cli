@@ -2,8 +2,8 @@ schemaVersion: "2.0.0"
 
 metadataTest:
   labels:
-    - key: 'maintainer'
-      value: 'bgauduch@github'
+    - key: "maintainer"
+      value: "bgauduch@github"
   cmd: ["bash"]
   workdir: "/workspace"
 
@@ -21,9 +21,9 @@ commandTests:
   - name: "Check Terraform CLI version"
     command: "terraform"
     args: ["version"]
-    expectedOutput: ["Terraform v0.12.28"]
+    expectedOutput: ["Terraform v0.13.1"]
 
-  - name:  "Check Azure CLI version"
+  - name: "Check Azure CLI version"
     command: "az"
     args: ["version"]
-    expectedOutput: ["\"azure-cli\": \"2.9.1\""]
+    expectedOutput: ['"azure-cli": "2.10.1"']
