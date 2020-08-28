@@ -26,12 +26,12 @@ jobs:
       matrix:
         tf_version:
           - "0.11.14"
-          - "0.12.28"
-          - "0.13.0"
+          - "0.12.29"
+          - "0.13.1"
         azcli_version:
-          - "2.8.0"
           - "2.9.1"
           - "2.10.1"
+          # - "2.11.1" # not ready for release yet: https://github.com/Azure/azure-cli/issues/14963
 
     env:
       ORGANIZATION: "zenika"
