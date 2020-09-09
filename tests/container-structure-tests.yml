@@ -21,7 +21,7 @@ commandTests:
   - name: "Check Terraform CLI version"
     command: "terraform"
     args: ["version"]
-    expectedOutput: ["Terraform v0.13.1"]
+    expectedOutput: ["Terraform v0.13.2"]
 
   - name: "Check Azure CLI version"
     command: "az"
