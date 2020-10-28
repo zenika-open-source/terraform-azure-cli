@@ -27,11 +27,13 @@ jobs:
         tf_version:
           - "0.11.14"
           - "0.12.29"
-          - "0.13.2"
+          - "0.13.5"
+          - "0.14.0-beta1"
         azcli_version:
-          - "2.9.1"
-          - "2.10.1"
-          # - "2.11.1" # not ready for release yet: https://github.com/Azure/azure-cli/issues/14963
+          - "2.11.1"
+          - "2.12.1"
+          - "2.13.0"
+          - "2.14.0"
 
     env:
       ORGANIZATION: "zenika"
