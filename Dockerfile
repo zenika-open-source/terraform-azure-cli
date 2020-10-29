@@ -1,8 +1,8 @@
 # Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.12.1
-ARG TERRAFORM_VERSION=0.13.4
+ARG AZURE_CLI_VERSION=2.14.0
+ARG TERRAFORM_VERSION=0.13.5
 ARG PYTHON_MAJOR_VERSION=3.7
-ARG DEBIAN_VERSION=buster-20200908-slim
+ARG DEBIAN_VERSION=buster-20201012-slim
 
 # Download Terraform binary
 FROM debian:${DEBIAN_VERSION} as terraform-cli
@@ -29,7 +29,10 @@ ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.3-1
 RUN apt-get install -y --no-install-recommends python3-pip=18.1-5
-RUN pip3 install setuptools==49.6.0
+RUN apt-get install -y --no-install-recommends gcc=4:8.3.0-1
+RUN apt-get install -y --no-install-recommends python3-dev=${PYTHON_MAJOR_VERSION}.3-1
+RUN pip3 install setuptools==50.3.2
+RUN pip3 install wheel==0.35.1
 RUN pip3 install azure-cli==${AZURE_CLI_VERSION}
 
 # Build final image

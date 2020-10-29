@@ -70,8 +70,8 @@ Optionally, it is possible to choose the tools desired versions using [Docker bu
 
 ```bash
 # Set tools desired versions
-AZURE_CLI_VERSION=2.8.0
-TERRAFORM_VERSION=0.12.28
+AZURE_CLI_VERSION=2.14.0
+TERRAFORM_VERSION=0.13.5
 
 # launch the build script with parameters
 ./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
