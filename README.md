@@ -41,6 +41,7 @@ This image gives you the flexibility to be used for development or as a base ima
   * Available versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
 * [Python 3](https://www.python.org/)
   * Available versions on the [Debian packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=python3)
+* This image use a non root user with a GID and UID of 1001
 
 ## 🚀 Usage
 
@@ -71,7 +72,7 @@ Optionally, it is possible to choose the tools desired versions using [Docker bu
 ```bash
 # Set tools desired versions
 AZURE_CLI_VERSION=2.15.1
-TERRAFORM_VERSION=0.13.5
+TERRAFORM_VERSION=0.14.0
 
 # launch the build script with parameters
 ./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
