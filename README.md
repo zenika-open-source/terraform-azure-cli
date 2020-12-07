@@ -42,6 +42,8 @@ This image gives you the flexibility to be used for development or as a base ima
 * [Python 3](https://www.python.org/)
   * Available versions on the [Debian packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=python3)
 
+This image uses a non-root user with a UID and GID of 1001 to conform with docker security best practices.
+
 ## 🚀 Usage
 
 ### Launch the CLI
