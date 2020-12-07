@@ -1,6 +1,6 @@
 # Setup build arguments with default versions
 ARG AZURE_CLI_VERSION=2.15.1
-ARG TERRAFORM_VERSION=0.13.5
+ARG TERRAFORM_VERSION=0.14.0
 ARG PYTHON_MAJOR_VERSION=3.7
 ARG DEBIAN_VERSION=buster-20201012-slim
 
@@ -52,5 +52,12 @@ COPY --from=terraform-cli /terraform /usr/local/bin/terraform
 COPY --from=azure-cli /usr/local/bin/az* /usr/local/bin/
 COPY --from=azure-cli /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages
 COPY --from=azure-cli /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages
+
 WORKDIR /workspace
+RUN groupadd --gid 1001 nonroot \
+  # user needs a home folder to store azure credentials
+  && useradd --gid nonroot --create-home --uid 1001 nonroot \
+  && chown nonroot:nonroot /workspace
+USER nonroot
+
 CMD ["bash"]

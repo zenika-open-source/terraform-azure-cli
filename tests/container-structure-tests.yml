@@ -21,9 +21,25 @@ commandTests:
   - name: "Check Terraform CLI version"
     command: "terraform"
     args: ["version"]
-    expectedOutput: ["Terraform v0.13.5"]
+    expectedOutput: ["Terraform v0.14.0"]
 
   - name: "Check Azure CLI version"
     command: "az"
     args: ["version"]
     expectedOutput: ['"azure-cli": "2.15.1"']
+
+fileExistenceTests:
+  - name: 'Check nonroot user home'
+    path: '/home/nonroot'
+    shouldExist: true
+    permissions: 'drwxr-xr-x'
+    uid: 1001
+    gid: 1001
+    isExecutableBy: 'group'
+  - name: 'Check nonroot user rights on /workspace folder'
+    path: '/workspace'
+    shouldExist: true
+    permissions: 'drwxr-xr-x'
+    uid: 1001
+    gid: 1001
+    isExecutableBy: 'group'
