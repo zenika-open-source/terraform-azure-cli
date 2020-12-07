@@ -41,10 +41,10 @@ LABEL maintainer="bgauduch@github"
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-  ca-certificates=20190110 \
-  git=1:2.20.1-2+deb10u3 \
-  python3=${PYTHON_MAJOR_VERSION}.3-1 \
-  python3-distutils=${PYTHON_MAJOR_VERSION}.3-1 \
+    ca-certificates=20190110 \
+    git=1:2.20.1-2+deb10u3 \
+    python3=${PYTHON_MAJOR_VERSION}.3-1 \
+    python3-distutils=${PYTHON_MAJOR_VERSION}.3-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
