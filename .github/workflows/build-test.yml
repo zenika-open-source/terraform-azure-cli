@@ -90,8 +90,14 @@ jobs:
       - name: Load image
         run: docker image load --input ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
+      - name: Generate test config
+        run: |
+          export TF_VERSION=${{ matrix.tf_version }}
+          export AZ_VERSION=${{ matrix.azcli_version }}
+          envsubst '${TF_VERSION},${AZ_VERSION}' <tests/container-structure-tests.yml.template
+
       - name: run structure tests
         uses: plexsystems/container-structure-test-action@v0.2.0
         with:
           image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          config: tests/container-structure-tests.yml
+          config: tests/container-structure-tests.yml.template
