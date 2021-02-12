@@ -39,9 +39,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-
     needs: load_supported_versions
-
     strategy:
       matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
 
@@ -52,42 +50,44 @@ jobs:
       - name: Save branch name as env var
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Build and save image release tag
-        run: echo "IMAGE_RELEASE_TAG=release-${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
+      - name: Build and save image full name
+        run: echo "IMAGE_FULL_NAME=${ORGANIZATION}/${IMAGE_NAME}:release-${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${IMAGE_FULL_NAME}
 
       - name: Save image
-        run: docker image save -o $IMAGE_NAME-$BRANCH.tar $ORGANIZATION/$IMAGE_NAME:$BRANCH
+        run: docker image save -o ${IMAGE_FULL_NAME}.tar ${IMAGE_FULL_NAME}
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.IMAGE_NAME }}-${{ env.BRANCH }}
-          path: ${{ env.IMAGE_NAME }}-${{ env.BRANCH }}.tar
+          name: ${{ env.IMAGE_FULL_NAME }}
+          path: ${{ env.IMAGE_FULL_NAME }}.tar
 
   test:
     runs-on: ubuntu-latest
     needs: build
+    strategy:
+      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
 
     steps:
       - name: Checkout source
         uses: actions/checkout@master
 
-      - name: Save branch name as env var
-        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: Build and save image full name
+        run: echo "IMAGE_FULL_NAME=${ORGANIZATION}/${IMAGE_NAME}:release-${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
 
       - name: Download image artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ env.IMAGE_NAME }}-${{ env.BRANCH }}
+          name: ${{ env.IMAGE_FULL_NAME }}
 
       - name: Load image
-        run: docker image load --input $IMAGE_NAME-$BRANCH.tar
+        run: docker image load --input ${IMAGE_FULL_NAME}.tar
 
       - name: run structure tests
         uses: plexsystems/container-structure-test-action@v0.2.0
         with:
-          image: ${{ env.ORGANIZATION }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH }}
+          image: ${{ env.IMAGE_FULL_NAME}}
           config: tests/container-structure-tests.yml
