@@ -1,0 +1,21 @@
+name: lint
+
+# trigger on any push, ignoring markdown files
+on:
+  push:
+    paths-ignore:
+      - "!README.md"
+      - "!CODE_OF_CONDUCT.md"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Lint Dockerfile
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: "Dockerfile"
