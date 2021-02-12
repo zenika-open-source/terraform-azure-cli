@@ -1,7 +1,7 @@
 name: build-test
 
 # trigger on any push
-# but not on master, tags or readme modifications
+# but not on master, tags or markdown modifications
 on:
   push:
     tags-ignore:

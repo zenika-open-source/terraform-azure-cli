@@ -1,4 +1,5 @@
-[![lint-build-test](https://github.com/Zenika/terraform-azure-cli/workflows/lint-build-test/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Alint-build-test)
+[![lint-dockerfile](https://github.com/Zenika/terraform-azure-cli/workflows/lint-dockerfile/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Alint-dockerfile)
+[![build-test](https://github.com/Zenika/terraform-azure-cli/workflows/build-test/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Abuild-test)
 [![push-latest](https://github.com/Zenika/terraform-azure-cli/workflows/push-latest/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Apush-latest)
 [![release](https://github.com/Zenika/terraform-azure-cli/workflows/release/badge.svg)](https://github.com/Zenika/terraform-azure-cli/actions?query=workflow%3Arelease)
 

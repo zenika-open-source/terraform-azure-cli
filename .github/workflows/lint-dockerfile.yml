@@ -1,6 +1,6 @@
-name: lint
+name: lint-dockerfile
 
-# trigger on any push, ignoring markdown files
+# trigger on any Dockerfile modification
 on:
   push:
     paths:
