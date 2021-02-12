@@ -33,9 +33,13 @@ jobs:
       - name: Read supported version JSON file
         id: set-matrix
         run: |
-          SUPPORTED_VERSION=$(cat ./supported_versions.json)
-          echo $SUPPORTED_VERSION
-          echo "::set-output name=matrix::${SUPPORTED_VERSION}"
+          SUPPORTED_VERSIONS=$(cat ./supported_versions.json)
+          echo "raw JSON: ${SUPPORTED_VERSIONS}"
+          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//'%'/%25}"
+          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\n'/%0A}"
+          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\r'/%0D}"
+          echo "escaped JSON: ${SUPPORTED_VERSIONS}"
+          echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
 
   build_push_release:
     runs-on: ubuntu-latest
