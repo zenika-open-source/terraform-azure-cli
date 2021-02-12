@@ -3,9 +3,8 @@ name: lint
 # trigger on any push, ignoring markdown files
 on:
   push:
-    paths-ignore:
-      - "!README.md"
-      - "!CODE_OF_CONDUCT.md"
+    paths:
+      - "Dockerfile"
 
 jobs:
   lint:
