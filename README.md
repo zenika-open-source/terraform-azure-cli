@@ -16,6 +16,8 @@
 ## 📦 Supported tags and respective Dockerfile links
 Available image tags can be found on the Docker Hub registry: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli/tags)
 
+Supported versions are listed in the [`supported_versions.json` ](/supported_versions.json) file in project root folder.
+
 The following image tag strategy is applied:
 * `zenika/terraform-azure-cli:latest` - build from master
   * Included CLI versions can be found in the [Dockerfile](https://github.com/Zenika/terraform-azure-cli/blob/master/Dockerfile)
@@ -24,27 +26,23 @@ The following image tag strategy is applied:
   * `terraform-UU.VV.WWW` is the included Terraform CLI version
   * `azcli-XX.YY.ZZ` is the included Azure CLI version
 
-Please report to the [releases page](https://github.com/Zenika/terraform-azure-cli/releases) for the changelogs. Any other tags are not supported.
+Please report to the [releases page](https://github.com/Zenika/terraform-azure-cli/releases) for the changelogs.
 
-## 💡Motivation
+> Any other tags are not supported even if available.
+
+## 💡 Motivation
 The goal is to create a **minimalist** and **lightweight** image with these tools in order to reduce network and storage impact.
 
-This image gives you the flexibility to be used for development or as a base image as you see fits.
+This image gives you the flexibility to be used either for development or as a base image as you see fits.
 
 ## 🔧 What's inside ?
 * [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest):
   * Included version indicated in the image tag: `azcli-XX.YY.ZZ`
-  * Available versions on the [project release page](https://github.com/Azure/azure-cli/releases)
 * [Terraform CLI](https://www.terraform.io/docs/commands/index.html):
   * Included version indicated in the image tag: `terraform-XX.YY.ZZ`
-  * Available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 * [Git](https://git-scm.com/)
-  * Available versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
 * [Python 3](https://www.python.org/)
-  * Available versions on the [Debian packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=python3)
-* This image use a non root user with a GID and UID of 1001
-
-This image uses a non-root user with a UID and GID of 1001 to conform with docker security best practices.
+* This image use a non root user with a GID and UID of 1001 to conform with docker security best practices.
 
 ## 🚀 Usage
 
@@ -73,11 +71,11 @@ It will :
 Optionally, it is possible to choose the tools desired versions using [Docker builds arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) :
 
 ```bash
-# Set tools desired versions
-AZURE_CLI_VERSION=2.15.1
-TERRAFORM_VERSION=0.14.0
+# Set desired tool versions
+AZURE_CLI_VERSION=2.20.0
+TERRAFORM_VERSION=0.14.8
 
-# launch the build script with parameters
+# launch build script with parameters
 ./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
 ```
 
@@ -85,6 +83,24 @@ TERRAFORM_VERSION=0.14.0
 Please refer to the [github project](https://github.com/Zenika/terraform-azure-cli/projects/1) to track new features.
 
 Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/terraform-azure-cli/issues) or [opening a PR](https://github.com/Zenika/terraform-azure-cli/pulls) !
+
+## ⬆️ Dependencies upgrades checklist
+
+* Supported versions:
+  * check Azure CLI version (only keep 3 latest releases), available versions on the [project release page](https://github.com/Azure/azure-cli/releases)
+  * check Terraform CLI version (keep all version from 0.11),  available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
+* Dockerfile:
+  * update default version in ARGS
+  * check base image version on DockerHub
+  * check OS packages on Debian package repository
+    * Available Git versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
+    * Available Python versions on the [Debian packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=python3)
+    * same process for all other packages
+* Github actions:
+  * check [runner version](https://github.com/actions/virtual-environments#available-environments)
+  * check all actions version release
+* Readme:
+  * update version references in code exemple
 
 ## 📖 License
 This project is under the [Apache License 2.0](https://raw.githubusercontent.com/Zenika/terraform-azure-cli/master/LICENSE)
