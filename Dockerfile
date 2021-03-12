@@ -8,6 +8,7 @@ ARG DEBIAN_VERSION=buster-20210208-slim
 FROM debian:${DEBIAN_VERSION} as terraform-cli
 ARG TERRAFORM_VERSION
 RUN apt-get update
+RUN apt-get install -y --no-install-recommends apt-utils=1.8.2.2
 RUN apt-get install -y --no-install-recommends curl=7.64.0-4+deb10u1
 RUN apt-get install -y --no-install-recommends ca-certificates=20200601~deb10u2
 RUN apt-get install -y --no-install-recommends unzip=6.0-23+deb10u2
@@ -27,11 +28,13 @@ FROM debian:${DEBIAN_VERSION} as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
+RUN apt-get install -y --no-install-recommends apt-utils=1.8.2.2
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.3-1
 RUN apt-get install -y --no-install-recommends python3-pip=18.1-5
 RUN apt-get install -y --no-install-recommends gcc=4:8.3.0-1
 RUN apt-get install -y --no-install-recommends python3-dev=${PYTHON_MAJOR_VERSION}.3-1
-RUN pip3 install --no-cache-dir setuptools==53.0.0
+RUN pip3 install --upgrade --no-cache-dir pip==21.0.1
+RUN pip3 install --no-cache-dir setuptools==54.1.1
 RUN pip3 install --no-cache-dir wheel==0.36.2
 RUN pip3 install --no-cache-dir azure-cli==${AZURE_CLI_VERSION}
 
