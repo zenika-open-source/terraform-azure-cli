@@ -18,7 +18,7 @@ env:
 
 jobs:
   load_supported_versions:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -37,7 +37,7 @@ jobs:
           echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: load_supported_versions
     strategy:
       matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
@@ -65,7 +65,7 @@ jobs:
           path: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - build
       - load_supported_versions
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Save branch name as env var
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV

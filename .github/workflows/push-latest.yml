@@ -16,7 +16,7 @@ env:
 
 jobs:
   build_push_latest:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Check out the repo
