@@ -21,12 +21,12 @@ commandTests:
   - name: "Check Terraform CLI version"
     command: "terraform"
     args: ["version"]
-    expectedOutput: ["Terraform v0.14.8"]
+    expectedOutput: ["Terraform v${TF_VERSION}"]
 
   - name: "Check Azure CLI version"
     command: "az"
     args: ["version"]
-    expectedOutput: ['"azure-cli": "2.20.0"']
+    expectedOutput: ['"azure-cli": "${AZ_VERSION}"']
 
 fileExistenceTests:
   - name: 'Check nonroot user home'

@@ -1,0 +1,20 @@
+name: lint-dockerfile
+
+# trigger on any Dockerfile modification
+on:
+  push:
+    paths:
+      - "Dockerfile"
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Lint Dockerfile
+        uses: brpaz/hadolint-action@v1.3.1
+        with:
+          dockerfile: "Dockerfile"

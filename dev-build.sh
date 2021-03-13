@@ -6,7 +6,7 @@ IMAGE_NAME="zenika/terraform-azure-cli:dev"
 
 # Lint Dockerfile
 echo "Linting Dockerfile..."
-docker run --rm -i hadolint/hadolint:v1.17.6-alpine < Dockerfile
+docker run --rm -i hadolint/hadolint:latest-alpine < Dockerfile
 echo "Lint Successful!"
 
 # Build dev image
