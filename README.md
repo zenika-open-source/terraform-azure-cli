@@ -64,11 +64,11 @@ It will :
 * Execute [container structure tests](https://github.com/GoogleContainerTools/container-structure-test) on the image.
 
 ```bash
-# launch build script
-./dev-build.sh
+# launch build script using latest supported versions for both Azure and Terraform CLI
+./build.sh
 ```
 
-Optionally, it is possible to choose the tools desired versions using [Docker builds arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg) :
+Optionally, it is possible to choose the tools desired versions:
 
 ```bash
 # Set desired tool versions
@@ -76,7 +76,7 @@ AZURE_CLI_VERSION=2.20.0
 TERRAFORM_VERSION=0.14.8
 
 # launch build script with parameters
-./dev-build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
+./build.sh $AZURE_CLI_VERSION $TERRAFORM_VERSION
 ```
 
 ## 🙏 Roadmap & Contributions
@@ -88,17 +88,17 @@ Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/te
 
 * Supported versions:
   * check Azure CLI version (only keep 3 latest releases), available versions on the [project release page](https://github.com/Azure/azure-cli/releases)
-  * check Terraform CLI version (keep all version from 0.11),  available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
+  * check Terraform CLI version (keep all minor versions from 0.11),  available versions on the [project release page](https://github.com/hashicorp/terraform/releases)
 * Dockerfile:
-  * update default version in ARGS
   * check base image version on DockerHub
-  * check OS packages on Debian package repository
+  * check OS package versions on Debian package repository
     * Available Git versions on the [Debian Packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=git)
     * Available Python versions on the [Debian packages repository](https://packages.debian.org/search?suite=buster&arch=any&searchon=names&keywords=python3)
     * same process for all other packages
+  * check Pip package versions
 * Github actions:
   * check [runner version](https://github.com/actions/virtual-environments#available-environments)
-  * check all actions version release
+  * check each action release versions
 * Readme:
   * update version references in code exemple
 
