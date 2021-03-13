@@ -48,13 +48,20 @@ jobs:
         run: echo "IMAGE_RELEASE_TAG=release-${RELEASE_TAG}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG} --tag ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-      - name: Push image to registry
+      - name: Push image to Docker Hub registry
         run: docker push ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+
+      # CR_PAT secret contains a PAT with `write:packages` and `read:packages` scopes
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image to GitHub Container registry
+        run: docker push ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Save image
         run: docker image save -o ${IMAGE_NAME}-${IMAGE_RELEASE_TAG}.tar ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
