@@ -24,8 +24,11 @@ docker image build --build-arg AZURE_CLI_VERSION="$AZ_VERSION" --build-arg TERRA
 echo "Image successfully builded!"
 
 # Test image
-echo "Generating test config..."
+echo "Generating test config with AZURE_CLI_VERSION=${AZ_VERSION} and TERRAFORM_VERSION=${TF_VERSION}..."
+export AZ_VERSION=${AZ_VERSION} && export TF_VERSION=${TF_VERSION}
 envsubst '${AZ_VERSION},${TF_VERSION}' < tests/container-structure-tests.yml.template > tests/container-structure-tests.yml
 echo "Test config successfully generated!"
 echo "Executing container structure test..."
 docker container run --rm -it -v "${PWD}"/tests/container-structure-tests.yml:/tests.yml:ro -v /var/run/docker.sock:/var/run/docker.sock:ro gcr.io/gcp-runtimes/container-structure-test:v1.8.0 test --image $IMAGE_NAME:$IMAGE_TAG --config /tests.yml
+unset AZ_VERSION
+unset TF_VERSION
