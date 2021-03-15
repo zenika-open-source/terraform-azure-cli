@@ -102,6 +102,10 @@ Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/te
 * Readme:
   * update version references in code exemple
 
+## Similar repositories
+
+* For AWS: [zenika-open-source/terraform-aws-cli](https://github.com/zenika-open-source/terraform-aws-cli)
+
 ## 📖 License
 This project is under the [Apache License 2.0](https://raw.githubusercontent.com/Zenika/terraform-azure-cli/master/LICENSE)
 
