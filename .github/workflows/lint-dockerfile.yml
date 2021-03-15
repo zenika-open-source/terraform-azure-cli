@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "Dockerfile"
+      - ".github/workflows/lint-dockerfile.yml"
 
 jobs:
   lint:

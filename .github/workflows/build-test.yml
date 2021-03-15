@@ -1,7 +1,8 @@
 name: build-test
 
 # trigger on any push
-# but not on master, tags or markdown modifications
+# but not on master or tags
+# and only for image-related modifications
 on:
   push:
     tags-ignore:
@@ -9,9 +10,13 @@ on:
     branches:
       - "**"
       - "!master"
-    paths-ignore:
-      - "!README.md"
-      - "!CODE_OF_CONDUCT.md"
+    paths:
+      - "Dockerfile"
+      - "supported_versions.json"
+      - "hashicorp.asc"
+      - "tests/*"
+      - ".dockerignore"
+      - ".github/workflows/build-test.yml"
 
 env:
   IMAGE_NAME: "terraform-azure-cli"

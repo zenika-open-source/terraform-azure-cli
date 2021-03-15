@@ -1,13 +1,17 @@
 name: push-latest
 
 # trigger on push to master
+# only on image-related modifications
 on:
   push:
     branches:
       - "master"
-    paths-ignore:
-      - "!README.md"
-      - "!CODE_OF_CONDUCT.md"
+    paths:
+      - "Dockerfile"
+      - "supported_versions.json"
+      - "hashicorp.asc"
+      - "tests/**"
+      - ".dockerignore"
 
 env:
   ORGANIZATION: "zenika"
