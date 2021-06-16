@@ -15,7 +15,7 @@ IMAGE_NAME="zenika/terraform-azure-cli"
 
 # Lint Dockerfile
 echo "Linting Dockerfile..."
-docker run --rm -i hadolint/hadolint:latest-alpine < Dockerfile
+docker run --rm --interactive --volume "${PWD}":/data --workdir /data hadolint/hadolint:2.5.0-alpine /bin/hadolint --config hadolint.yaml Dockerfile
 echo "Dockerfile successfully linted!"
 
 # Build image
@@ -29,6 +29,6 @@ export AZ_VERSION=${AZ_VERSION} && export TF_VERSION=${TF_VERSION}
 envsubst '${AZ_VERSION},${TF_VERSION}' < tests/container-structure-tests.yml.template > tests/container-structure-tests.yml
 echo "Test config successfully generated!"
 echo "Executing container structure test..."
-docker container run --rm -it -v "${PWD}"/tests/container-structure-tests.yml:/tests.yml:ro -v /var/run/docker.sock:/var/run/docker.sock:ro gcr.io/gcp-runtimes/container-structure-test:v1.8.0 test --image $IMAGE_NAME:$IMAGE_TAG --config /tests.yml
+docker container run --rm -it -v "${PWD}"/tests/container-structure-tests.yml:/tests.yml:ro -v /var/run/docker.sock:/var/run/docker.sock:ro gcr.io/gcp-runtimes/container-structure-test:v1.10.0 test --image $IMAGE_NAME:$IMAGE_TAG --config /tests.yml
 unset AZ_VERSION
 unset TF_VERSION
