@@ -87,7 +87,7 @@ Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/te
 ## ⬆️ Dependencies upgrades checklist
 
 * Supported versions:
-  * check Azure CLI version (only keep 3 latest releases), available on the [project release page](https://github.com/Azure/azure-cli/releases)
+  * check Azure CLI version (only keep 2 latest releases), available on the [project release page](https://github.com/Azure/azure-cli/releases)
   * check Terraform CLI version (keep all minor versions from 0.11), available on the [project release page](https://github.com/hashicorp/terraform/releases)
 * Dockerfile:
   * check base image version on DockerHub
