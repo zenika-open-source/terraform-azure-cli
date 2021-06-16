@@ -12,6 +12,7 @@ on:
       - "hashicorp.asc"
       - "tests/**"
       - ".dockerignore"
+      - ".github/workflows/push-latest.yml"
 
 env:
   ORGANIZATION: "zenika"
