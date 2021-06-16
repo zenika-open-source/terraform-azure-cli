@@ -1,18 +1,19 @@
-# Setup build arguments with default versions
-ARG AZURE_CLI_VERSION=2.20.0
-ARG TERRAFORM_VERSION=0.14.8
+# Build arguments
+ARG AZURE_CLI_VERSION
+ARG TERRAFORM_VERSION
 ARG PYTHON_MAJOR_VERSION=3.7
-ARG DEBIAN_VERSION=buster-20210208-slim
+ARG DEBIAN_VERSION=buster-20210511-slim
 
 # Download Terraform binary
 FROM debian:${DEBIAN_VERSION} as terraform-cli
 ARG TERRAFORM_VERSION
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends apt-utils=1.8.2.2
-RUN apt-get install -y --no-install-recommends curl=7.64.0-4+deb10u1
+RUN apt-get install -y --no-install-recommends apt=1.8.2.3
+RUN apt-get install -y --no-install-recommends curl=7.64.0-4+deb10u2
 RUN apt-get install -y --no-install-recommends ca-certificates=20200601~deb10u2
 RUN apt-get install -y --no-install-recommends unzip=6.0-23+deb10u2
 RUN apt-get install -y --no-install-recommends gnupg=2.2.12-1+deb10u1
+WORKDIR /workspace
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
@@ -28,7 +29,7 @@ FROM debian:${DEBIAN_VERSION} as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends apt-utils=1.8.2.2
+RUN apt-get install -y --no-install-recommends apt=1.8.2.3
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.3-1
 RUN apt-get install -y --no-install-recommends python3-pip=18.1-5
 RUN apt-get install -y --no-install-recommends gcc=4:8.3.0-1
@@ -51,12 +52,12 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
-COPY --from=terraform-cli /terraform /usr/local/bin/terraform
+WORKDIR /workspace
+COPY --from=terraform-cli /workspace/terraform /usr/local/bin/terraform
 COPY --from=azure-cli /usr/local/bin/az* /usr/local/bin/
 COPY --from=azure-cli /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages /usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages
 COPY --from=azure-cli /usr/lib/python3/dist-packages /usr/lib/python3/dist-packages
 
-WORKDIR /workspace
 RUN groupadd --gid 1001 nonroot \
   # user needs a home folder to store azure credentials
   && useradd --gid nonroot --create-home --uid 1001 nonroot \
