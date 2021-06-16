@@ -16,7 +16,7 @@
 ## 📦 Supported tags and respective Dockerfile links
 Available image tags can be found on the Docker Hub registry: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli/tags)
 
-Supported versions are listed in the [`supported_versions.json` ](/supported_versions.json) file in project root folder.
+Supported versions are listed in the [`supported_versions.json` ](https://github.com/Zenika/terraform-azure-cli/blob/master/supported_versions.json) file in project root folder.
 
 The following image tag strategy is applied:
 * `zenika/terraform-azure-cli:latest` - build from master
