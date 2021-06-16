@@ -1,8 +1,15 @@
 name: lint-dockerfile
 
-# trigger on any Dockerfile modification
+# trigger on any push
+# but not on master or tags
+# and only for dockerfile modifications
 on:
   push:
+    tags-ignore:
+      - "**"
+    branches:
+      - "**"
+      - "!master"
     paths:
       - "Dockerfile"
       - ".github/workflows/lint-dockerfile.yml"

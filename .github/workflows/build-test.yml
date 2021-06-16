@@ -2,7 +2,7 @@ name: build-test
 
 # trigger on any push
 # but not on master or tags
-# and only for image-related modifications
+# and only for dockerfile-related modifications
 on:
   push:
     tags-ignore:
