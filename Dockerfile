@@ -14,9 +14,9 @@ RUN apt-get install -y --no-install-recommends ca-certificates=20200601~deb10u2
 RUN apt-get install -y --no-install-recommends unzip=6.0-23+deb10u2
 RUN apt-get install -y --no-install-recommends gnupg=2.2.12-1+deb10u1
 WORKDIR /workspace
-RUN curl -Ovs https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
-RUN curl -Ovs https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-RUN curl -Ovs https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
 COPY hashicorp.asc hashicorp.asc
 RUN gpg --import hashicorp.asc
 RUN gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS
