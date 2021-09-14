@@ -1,18 +1,17 @@
 # Build arguments
 ARG AZURE_CLI_VERSION
 ARG TERRAFORM_VERSION
-ARG PYTHON_MAJOR_VERSION=3.7
-ARG DEBIAN_VERSION=buster-20210511-slim
+ARG PYTHON_MAJOR_VERSION=3.9
+ARG DEBIAN_VERSION=bullseye-20210902-slim
 
 # Download Terraform binary
 FROM debian:${DEBIAN_VERSION} as terraform-cli
 ARG TERRAFORM_VERSION
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends apt=1.8.2.3
-RUN apt-get install -y --no-install-recommends curl=7.64.0-4+deb10u2
-RUN apt-get install -y --no-install-recommends ca-certificates=20200601~deb10u2
-RUN apt-get install -y --no-install-recommends unzip=6.0-23+deb10u2
-RUN apt-get install -y --no-install-recommends gnupg=2.2.12-1+deb10u1
+RUN apt-get install --no-install-recommends -y curl=7.74.0-1.3+b1
+RUN apt-get install --no-install-recommends -y ca-certificates=20210119
+RUN apt-get install --no-install-recommends -y unzip=6.0-26
+RUN apt-get install --no-install-recommends -y gnupg=2.2.27-2
 WORKDIR /workspace
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -29,14 +28,11 @@ FROM debian:${DEBIAN_VERSION} as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends apt=1.8.2.3
-RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.3-1
-RUN apt-get install -y --no-install-recommends python3-pip=18.1-5
-RUN apt-get install -y --no-install-recommends gcc=4:8.3.0-1
-RUN apt-get install -y --no-install-recommends python3-dev=${PYTHON_MAJOR_VERSION}.3-1
-RUN pip3 install --upgrade --no-cache-dir pip==21.0.1
-RUN pip3 install --no-cache-dir setuptools==54.1.1
-RUN pip3 install --no-cache-dir wheel==0.36.2
+RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.2-3
+RUN apt-get install -y --no-install-recommends python3-pip=20.3.4-4
+RUN pip3 install --upgrade --no-cache-dir pip==21.2.4
+RUN pip3 install --no-cache-dir setuptools==58.0.4
+RUN pip3 install --no-cache-dir wheel==0.37.0
 RUN pip3 install --no-cache-dir azure-cli==${AZURE_CLI_VERSION}
 
 # Build final image
@@ -45,10 +41,10 @@ LABEL maintainer="bgauduch@github"
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    ca-certificates=20200601~deb10u2 \
-    git=1:2.20.1-2+deb10u3 \
-    python3=${PYTHON_MAJOR_VERSION}.3-1 \
-    python3-distutils=${PYTHON_MAJOR_VERSION}.3-1 \
+    ca-certificates=20210119 \
+    git=1:2.30.2-1 \
+    python3=${PYTHON_MAJOR_VERSION}.2-3 \
+    python3-distutils=${PYTHON_MAJOR_VERSION}.2-1 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
