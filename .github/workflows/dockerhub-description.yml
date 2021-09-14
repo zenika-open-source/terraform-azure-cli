@@ -1,4 +1,7 @@
 name: Update Docker Hub Description
+
+# trigger on master
+# and only for readme related modifications
 on:
   push:
     branches:
