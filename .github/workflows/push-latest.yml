@@ -45,7 +45,7 @@ jobs:
         run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Upload image artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}
           path: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}.tar
