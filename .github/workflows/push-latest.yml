@@ -8,14 +8,13 @@ on:
       - "master"
     paths:
       - "Dockerfile"
-      - "supported_versions.json"
       - "hashicorp.asc"
       - "tests/**"
       - ".dockerignore"
       - ".github/workflows/push-latest.yml"
 
 env:
-  ORGANIZATION: "zenika"
+  ORGANIZATION: "stroem"
   IMAGE_NAME: "terraform-azure-cli"
   IMAGE_TAG: "latest"
 

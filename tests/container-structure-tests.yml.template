@@ -36,6 +36,7 @@ fileExistenceTests:
     uid: 1001
     gid: 1001
     isExecutableBy: 'group'
+
   - name: 'Check nonroot user rights on /workspace folder'
     path: '/workspace'
     shouldExist: true
