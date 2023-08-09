@@ -42,7 +42,7 @@ jobs:
         run: docker push $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Save image
-        run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
+        run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2
