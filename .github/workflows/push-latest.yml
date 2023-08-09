@@ -39,7 +39,7 @@ jobs:
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push image to registry
-        run: docker push $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Save image
         run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
