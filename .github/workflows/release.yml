@@ -48,16 +48,16 @@ jobs:
         run: echo "IMAGE_RELEASE_TAG=release-${RELEASE_TAG}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push image to registry
-        run: docker push ${{ vars.ORGANIZATION }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Save image
-        run: docker image save -o ${IMAGE_NAME}-${IMAGE_RELEASE_TAG}.tar ${{ vars.ORGANIZATION }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
+        run: docker image save -o ${IMAGE_NAME}-${IMAGE_RELEASE_TAG}.tar ${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2

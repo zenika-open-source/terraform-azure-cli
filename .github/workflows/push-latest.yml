@@ -15,7 +15,6 @@ on:
       - ".github/workflows/push-latest.yml"
 
 env:
-  ORGANIZATION: "zenika"
   IMAGE_NAME: "terraform-azure-cli"
   IMAGE_TAG: "latest"
 
@@ -33,16 +32,16 @@ jobs:
           echo "TF_VERSION=$(jq -r '.tf_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TF_VERSION} --build-arg AZURE_CLI_VERSION=${AZ_VERSION} --tag $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TF_VERSION} --build-arg AZURE_CLI_VERSION=${AZ_VERSION} --tag ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push image to registry
-        run: docker push ${{ vars.ORGANIZATION }}/$IMAGE_NAME:$IMAGE_TAG
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Save image
-        run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar ${{ vars.ORGANIZATION }}/$IMAGE_NAME:$IMAGE_TAG
+        run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v2

@@ -20,4 +20,4 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASS }}
-        repository: ${{ vars.ORGANIZATION }}/terraform-azure-cli
+        repository: ${{ secrets.DOCKERHUB_USERNAME }}/terraform-azure-cli
