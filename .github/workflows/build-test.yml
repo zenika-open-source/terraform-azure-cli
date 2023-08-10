@@ -4,6 +4,7 @@ name: build-test
 # but not on master or tags
 # and only for Dockerfile related modifications
 on:
+  workflow_dispatch:
   push:
     tags-ignore:
       - "**"
