@@ -1,21 +1,21 @@
-[![lint-dockerfile](/actions/workflows/lint-dockerfile.yml/badge.svg)](/actions/workflows/lint-dockerfile.yml)
-[![build-test](/actions/workflows/build-test.yml/badge.svg)](/actions/workflows/build-test.yml)
-[![push-latest](/actions/workflows/push-latest.yml/badge.svg)](/actions/workflows/push-latest.yml)
-[![release](/actions/workflows/release.yml/badge.svg)](/actions/workflows/release.yml)
+[![lint-dockerfile](https://github.com/worwoods/terraform-azure-cli/actions/workflows/lint-dockerfile.yml/badge.svg)](https://github.com/worwoods/terraform-azure-cli/actions/workflows/lint-dockerfile.yml)
+[![build-test](https://github.com/worwoods/terraform-azure-cli/actions/workflows/build-test.yml/badge.svg)](https://github.com/worwoods/terraform-azure-cli/actions/workflows/build-test.yml)
+[![push-latest](https://github.com/worwoods/terraform-azure-cli/actions/workflows/push-latest.yml/badge.svg)](https://github.com/worwoods/terraform-azure-cli/actions/workflows/push-latest.yml)
+[![release](https://github.com/worwoods/terraform-azure-cli/actions/workflows/release.yml/badge.svg)](https://github.com/worwoods/terraform-azure-cli/actions/workflows/release.yml)
 
-[![Update Docker Hub Description](/actions/workflows/dockerhub-description.yml/badge.svg)](/actions/workflows/dockerhub-description.yml)
+[![Update Docker Hub Description](https://github.com/worwoods/terraform-azure-cli/actions/workflows/dockerhub-description.yml/badge.svg)](https://github.com/worwoods/terraform-azure-cli/actions/workflows/dockerhub-description.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/worwoods/terraform-azure-cli.svg)](https://hub.docker.com/r/worwoods/terraform-azure-cli/)
 
 <p align="center">
-  <a href="https://azure.microsoft.com"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/azure-logo.png"></a>
-  <a href="https://www.terraform.io/"><img width="200" src="https://github.com/Zenika/terraform-azure-cli/raw/master/resources/terraform-logo.png"></a>
+  <a href="https://azure.microsoft.com"><img width="200" src="https://github.com/worwoods/terraform-azure-cli/raw/master/resources/azure-logo.png"></a>
+  <a href="https://www.terraform.io/"><img width="200" src="https://github.com/worwoods/terraform-azure-cli/raw/master/resources/terraform-logo.png"></a>
 </p>
 
 # Terraform and Azure CLI Docker image
 
 ## 📦 Supported tags and respective Dockerfile links
-Available image tags can be found on the Docker Hub registry: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli/tags)
+Available image tags can be found on the Docker Hub registry: [worwoods/terraform-azure-cli](https://hub.docker.com/r/worwoods/terraform-azure-cli/tags)
 
 Supported versions are listed in the [`supported_versions.json` ](/supported_versions.json) file in project root folder.
 
