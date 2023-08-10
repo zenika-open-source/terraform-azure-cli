@@ -1,9 +1,9 @@
-[![lint-dockerfile](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/lint-dockerfile.yml/badge.svg)](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/lint-dockerfile.yml)
-[![build-test](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/build-test.yml/badge.svg)](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/build-test.yml)
-[![push-latest](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/push-latest.yml/badge.svg)](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/push-latest.yml)
-[![release](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/release.yml/badge.svg)](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/release.yml)
+[![lint-dockerfile](/actions/workflows/lint-dockerfile.yml/badge.svg)](/actions/workflows/lint-dockerfile.yml)
+[![build-test](/actions/workflows/build-test.yml/badge.svg)](/actions/workflows/build-test.yml)
+[![push-latest](/actions/workflows/push-latest.yml/badge.svg)](/actions/workflows/push-latest.yml)
+[![release](/actions/workflows/release.yml/badge.svg)](/actions/workflows/release.yml)
 
-[![Update Docker Hub Description](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/dockerhub-description.yml/badge.svg)](https://github.com/zenika-open-source/terraform-azure-cli/actions/workflows/dockerhub-description.yml)
+[![Update Docker Hub Description](/actions/workflows/dockerhub-description.yml/badge.svg)](/actions/workflows/dockerhub-description.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/zenika/terraform-azure-cli.svg)](https://hub.docker.com/r/zenika/terraform-azure-cli/)
 
@@ -17,17 +17,17 @@
 ## 📦 Supported tags and respective Dockerfile links
 Available image tags can be found on the Docker Hub registry: [zenika/terraform-azure-cli](https://hub.docker.com/r/zenika/terraform-azure-cli/tags)
 
-Supported versions are listed in the [`supported_versions.json` ](https://github.com/zenika-open-source/terraform-azure-cli/blob/master/supported_versions.json) file in project root folder.
+Supported versions are listed in the [`supported_versions.json` ](/supported_versions.json) file in project root folder.
 
 The following image tag strategy is applied:
 * `zenika/terraform-azure-cli:latest` - build from master
-  * Included CLI versions are the newest in the [`supported_versions.json` ](https://github.com/zenika-open-source/terraform-azure-cli/blob/master/supported_versions.json) file.
+  * Included CLI versions are the newest in the [`supported_versions.json` ](/supported_versions.json) file.
 * `zenika/terraform-azure-cli:release-S.T_terraform-UU.VV.WW_azcli-XX.YY.ZZ` - build from releases
   * `release-S.T` is the release tag
   * `terraform-UU.VV.WWW` is the included **Terraform CLI** version
   * `azcli-XX.YY.ZZ` is the included **Azure CLI** version
 
-Please report to the [releases page](https://github.com/zenika-open-source/terraform-azure-cli/releases) for the changelogs.
+Please report to the [releases page](/releases) for the changelogs.
 
 > Any other tags are not supported even if available.
 
@@ -80,9 +80,9 @@ TERRAFORM_VERSION=0.15.5
 ```
 
 ## 🙏 Roadmap & Contributions
-Please refer to the [github project](https://github.com/zenika-open-source/terraform-azure-cli/projects/1) to track new features.
+Please refer to the [github project](/projects/1) to track new features.
 
-Do not hesitate to contribute by [filling an issue](https://github.com/zenika-open-source/terraform-azure-cli/issues/new) or [opening a PR](https://github.com/zenika-open-source/terraform-azure-cli/pulls) !
+Do not hesitate to contribute by [filling an issue](/issues/new) or [opening a PR](/pulls) !
 
 ## ⬆️ Dependencies upgrades checklist
 
