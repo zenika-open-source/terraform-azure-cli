@@ -23,30 +23,14 @@ env:
   IMAGE_NAME: "terraform-azure-cli"
 
 jobs:
-  load_supported_versions:
+  load_versions:
+    uses: ./.github/workflows/include_supported-versions.yml
+
+  build_containers:
     runs-on: ubuntu-20.04
-
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Save supported versions as output
-        id: set-matrix
-        run: |
-          SUPPORTED_VERSIONS=$(cat ./supported_versions.json)
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//'%'/%25}"
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\n'/%0A}"
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\r'/%0D}"
-          echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
-
-  build:
-    runs-on: ubuntu-20.04
-    needs: load_supported_versions
+    needs: load_versions
     strategy:
-      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.load_versions.outputs.matrix) }}
 
     steps:
       - name: Check out the repo
@@ -56,7 +40,9 @@ jobs:
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Build and save image tag
-        run: echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
+        run: |
+            echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
+            echo $IMAGE_TAG
 
       - name: Build image
         run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${IMAGE_NAME}:${IMAGE_TAG}
@@ -70,13 +56,13 @@ jobs:
           name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
           path: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
-  test:
+  test_container:
     runs-on: ubuntu-20.04
     needs:
-      - build
-      - load_supported_versions
+      - build_containers
+      - load_versions
     strategy:
-      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.load_versions.outputs.matrix) }}
 
     steps:
       - name: Checkout source

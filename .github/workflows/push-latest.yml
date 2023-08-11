@@ -19,20 +19,19 @@ env:
   IMAGE_TAG: "latest"
 
 jobs:
+  latest_version:
+    uses: ./.github/workflows/include_latest-version.yml
+
   build_push_latest:
     runs-on: ubuntu-20.04
+    needs: latest_version
 
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Retrieve latest suported versions
-        run: |
-          echo "AZ_VERSION=$(jq -r '.azcli_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
-          echo "TF_VERSION=$(jq -r '.tf_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
-
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TF_VERSION} --build-arg AZURE_CLI_VERSION=${AZ_VERSION} --tag ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ needs.latest_version.outputs.tf_version }} --build-arg AZURE_CLI_VERSION=${{ needs.latest_version.outputs.azcli_version }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin

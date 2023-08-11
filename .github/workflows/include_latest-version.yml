@@ -1,0 +1,43 @@
+name: Load Supported Versions
+
+on:
+  workflow_call:
+    outputs:
+      azcli_version:
+        description: "Latest supported azcli version"
+        value: ${{ jobs.load_versions.outputs.azcli_version }}
+      tf_version:
+        description:  "Latest supported terraform version"
+        value: ${{ jobs.load_versions.outputs.tf_version }}
+  workflow_dispatch:
+
+jobs:
+  load_versions:
+    runs-on: ubuntu-20.04
+    outputs:
+      azcli_version: ${{ env.azcli_version }}
+      tf_version: ${{ env.tf_version }}
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Save supported versions as output
+        id: set-matrix
+        run: |
+          echo "azcli_version=$(jq -r '.azcli_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
+          echo "tf_version=$(jq -r '.tf_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
+
+      - name: output
+        run: |
+          echo $azcli_version
+          echo $tf_version
+
+  display_versions:
+    needs: load_versions
+    runs-on: ubuntu-latest
+    steps:
+        - name: Access Variable
+          run: |
+            echo "azcli_version=${{ needs.load_versions.outputs.azcli_version }}"
+            echo "tf_version=${{ needs.load_versions.outputs.tf_version }}"

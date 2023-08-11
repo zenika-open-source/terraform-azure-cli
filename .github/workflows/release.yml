@@ -6,35 +6,18 @@ on:
     types: [published]
 
 jobs:
-  load_supported_versions:
-    runs-on: ubuntu-20.04
-
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Save supported versions as output
-        id: set-matrix
-        run: |
-          SUPPORTED_VERSIONS=$(cat ./supported_versions.json)
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//'%'/%25}"
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\n'/%0A}"
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\r'/%0D}"
-          echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
+  load_versions:
+    uses: ./.github/workflows/include_supported-versions.yml
 
   build_push_release:
     runs-on: ubuntu-20.04
     needs:
-      - load_supported_versions
+      - load_versions
 
     strategy:
-      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.load_versions.outputs.matrix) }}
 
     env:
-      ORGANIZATION: "zenika"
       IMAGE_NAME: "terraform-azure-cli"
 
     steps:
@@ -55,7 +38,7 @@ jobs:
 
       - name: Push image to registry
         run: |
-              docker images 
+              docker images
               docker push ${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Save image
