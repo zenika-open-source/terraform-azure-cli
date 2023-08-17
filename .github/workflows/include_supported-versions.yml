@@ -1,0 +1,50 @@
+name: Load Supported Versions
+
+on:
+  workflow_call:
+    outputs:
+      matrix:
+        description: "Matrix of supported versions"
+        value: ${{ jobs.load_versions.outputs.matrix }}
+      azcli_version:
+        description: "Matrix of supported azcli versions"
+        value: ${{ jobs.load_versions.outputs.azcli_version }}
+      tf_version:
+        description: "Matrix of supported terraform versions"
+        value: ${{ jobs.load_versions.outputs.tf_version }}
+  workflow_dispatch:
+
+jobs:
+  load_versions:
+    runs-on: ubuntu-20.04
+    outputs:
+      azcli_version: ${{ env.azcli_version }}
+      tf_version: ${{ env.tf_version }}
+      matrix: ${{ env.matrix }}
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Save supported versions as output
+        id: set-matrix
+        run: |
+          echo "azcli_version=$(jq -r -c '.azcli_version | sort | reverse' supported_versions.json)" >> $GITHUB_ENV
+          echo "tf_version=$(jq -r -c '.tf_version | sort | reverse' supported_versions.json)" >> $GITHUB_ENV
+          echo -e matrix=\{"azcli_version": $(jq -r -c '.azcli_version | sort | reverse' supported_versions.json), "tf_version": $(jq -r -c '.tf_version | sort | reverse' supported_versions.json)\} >> $GITHUB_ENV
+
+      - name: output
+        run: |
+          echo $azcli_version
+          echo $tf_version
+          echo $matrix
+
+  display_versions:
+    needs: load_versions
+    runs-on: ubuntu-latest
+    steps:
+        - name: Access Variable
+          run: |
+            echo "azcli_version=${{ needs.load_versions.outputs.azcli_version }}"
+            echo "tf_version=${{ needs.load_versions.outputs.tf_version }}"
+            echo "matrix=${{ needs.load_versions.outputs.matrix }}"

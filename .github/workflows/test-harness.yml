@@ -1,0 +1,29 @@
+name: test_supported-versions.yaml
+on:
+  push:
+jobs:
+  load_versions:
+    uses: ./.github/workflows/include_supported-versions.yml
+
+  latest_version:
+    uses: ./.github/workflows/include_latest-version.yml
+
+  check_values:
+    runs-on: ubuntu-latest
+    needs: load_versions
+    strategy:
+      matrix: ${{ fromJSON(needs.load_versions.outputs.matrix) }}
+    steps:
+      - name: Test access to values
+        run: |
+          echo ${{ needs.load_versions.outputs.matrix }}
+          echo tf_${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}
+
+  check_latest:
+    runs-on: ubuntu-latest
+    needs: latest_version
+    steps:
+      - name: Test access to values
+        run: |
+          echo terraform: ${{ needs.latest_version.outputs.tf_version }}
+          echo azcli: ${{ needs.latest_version.outputs.azcli_version }}

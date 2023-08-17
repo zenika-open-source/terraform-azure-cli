@@ -4,6 +4,7 @@ name: build-test
 # but not on master or tags
 # and only for Dockerfile related modifications
 on:
+  workflow_dispatch:
   push:
     tags-ignore:
       - "**"
@@ -22,30 +23,14 @@ env:
   IMAGE_NAME: "terraform-azure-cli"
 
 jobs:
-  load_supported_versions:
+  load_versions:
+    uses: ./.github/workflows/include_supported-versions.yml
+
+  build_containers:
     runs-on: ubuntu-20.04
-
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Save supported versions as output
-        id: set-matrix
-        run: |
-          SUPPORTED_VERSIONS=$(cat ./supported_versions.json)
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//'%'/%25}"
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\n'/%0A}"
-          SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\r'/%0D}"
-          echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
-
-  build:
-    runs-on: ubuntu-20.04
-    needs: load_supported_versions
+    needs: load_versions
     strategy:
-      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.load_versions.outputs.matrix) }}
 
     steps:
       - name: Check out the repo
@@ -55,45 +40,12 @@ jobs:
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Build and save image tag
-        run: echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
-
+        run: |
+            echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
+            echo $IMAGE_TAG
+            
       - name: Build image
         run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AZURE_CLI_VERSION=${{ matrix.azcli_version }} --tag ${IMAGE_NAME}:${IMAGE_TAG}
-
-      - name: Save image
-        run: docker image save --output ${IMAGE_NAME}_${IMAGE_TAG}.tar ${IMAGE_NAME}:${IMAGE_TAG}
-
-      - name: Upload image artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
-          path: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
-
-  test:
-    runs-on: ubuntu-20.04
-    needs:
-      - build
-      - load_supported_versions
-    strategy:
-      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
-
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-
-      - name: Save branch name as env var
-        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
-      - name: Build and save image tag
-        run: echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
-
-      - name: Download image artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
-
-      - name: Load image
-        run: docker image load --input ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
       - name: Generate test config
         run: |
@@ -102,7 +54,7 @@ jobs:
           envsubst '${TF_VERSION},${AZ_VERSION}' < tests/container-structure-tests.yml.template > tests/container-structure-tests.yml
 
       - name: run structure tests
-        uses: plexsystems/container-structure-test-action@v0.2.0
+        uses: plexsystems/container-structure-test-action@v0.3.0
         with:
           image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           config: tests/container-structure-tests.yml
