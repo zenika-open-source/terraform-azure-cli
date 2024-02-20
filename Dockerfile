@@ -28,7 +28,6 @@ FROM debian:${DEBIAN_VERSION} as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
-RUN apt-cache show gnupg | grep Version
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.2-1+b1
 RUN apt-get install -y --no-install-recommends python3-pip=23.0.1+dfsg-1
 # Without '--break-system-packages' option we get an error installing items with
@@ -42,10 +41,10 @@ LABEL maintainer="bgauduch@github"
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-  ca-certificates=20230311 \
-  git=1:2.39.2-1.1 \
-  python3=${PYTHON_MAJOR_VERSION}.2-1+b1 \
-  python3-distutils=${PYTHON_MAJOR_VERSION}.2-3 \
+    ca-certificates=20230311 \
+    git=1:2.39.2-1.1 \
+    python3=${PYTHON_MAJOR_VERSION}.2-1+b1 \
+    python3-distutils=${PYTHON_MAJOR_VERSION}.2-3 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
