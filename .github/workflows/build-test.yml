@@ -23,7 +23,7 @@ env:
 
 jobs:
   load_supported_versions:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -42,7 +42,7 @@ jobs:
           echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
 
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: load_supported_versions
     strategy:
       matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
@@ -70,7 +70,7 @@ jobs:
           path: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - build
       - load_supported_versions
