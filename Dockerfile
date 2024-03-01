@@ -1,17 +1,17 @@
 # Build arguments
 ARG AZURE_CLI_VERSION
 ARG TERRAFORM_VERSION
-ARG PYTHON_MAJOR_VERSION=3.9
-ARG DEBIAN_VERSION=bullseye-20220125-slim
+ARG PYTHON_MAJOR_VERSION=3.11
+ARG DEBIAN_VERSION=bookworm-20240211-slim
 
 # Download Terraform binary
 FROM debian:${DEBIAN_VERSION} as terraform-cli
 ARG TERRAFORM_VERSION
 RUN apt-get update
-RUN apt-get install --no-install-recommends -y curl=7.74.0-1.3+deb11u1
-RUN apt-get install --no-install-recommends -y ca-certificates=20210119
-RUN apt-get install --no-install-recommends -y unzip=6.0-26
-RUN apt-get install --no-install-recommends -y gnupg=2.2.27-2
+RUN apt-get install --no-install-recommends -y curl=7.88.1-10+deb12u5
+RUN apt-get install --no-install-recommends -y ca-certificates=20230311
+RUN apt-get install --no-install-recommends -y unzip=6.0-28
+RUN apt-get install --no-install-recommends -y gnupg=2.2.40-1.1
 WORKDIR /workspace
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -28,10 +28,15 @@ FROM debian:${DEBIAN_VERSION} as azure-cli
 ARG AZURE_CLI_VERSION
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.2-3
-RUN apt-get install -y --no-install-recommends python3-pip=20.3.4-4
-RUN pip3 install --no-cache-dir setuptools==60.8.2
-RUN pip3 install --no-cache-dir azure-cli==${AZURE_CLI_VERSION}
+RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.2-1+b1
+RUN apt-get install -y --no-install-recommends python3-pip=23.0.1+dfsg-1
+# required dependency for azure-cli pip installation
+RUN apt-get install -y --no-install-recommends gcc=4:12.2.0-3
+RUN apt-get install -y --no-install-recommends python3-dev=3.11.2-1+b1
+# '--break-system-packages' option prevent errors when installing items with pip, without using venv.
+# It's not required in a throw-away container.
+RUN pip3 install --no-cache-dir setuptools==69.1.1 --break-system-packages
+RUN pip3 install --no-cache-dir azure-cli==${AZURE_CLI_VERSION} --break-system-packages
 
 # Build final image
 FROM debian:${DEBIAN_VERSION}
@@ -39,10 +44,10 @@ LABEL maintainer="bgauduch@github"
 ARG PYTHON_MAJOR_VERSION
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    ca-certificates=20210119 \
-    git=1:2.30.2-1 \
-    python3=${PYTHON_MAJOR_VERSION}.2-3 \
-    python3-distutils=${PYTHON_MAJOR_VERSION}.2-1 \
+    ca-certificates=20230311 \
+    git=1:2.39.2-1.1 \
+    python3=${PYTHON_MAJOR_VERSION}.2-1+b1 \
+    python3-distutils=${PYTHON_MAJOR_VERSION}.2-3 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_MAJOR_VERSION} 1
