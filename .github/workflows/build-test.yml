@@ -23,14 +23,14 @@ env:
 
 jobs:
   load_supported_versions:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Save supported versions as output
         id: set-matrix
@@ -42,14 +42,14 @@ jobs:
           echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
 
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: load_supported_versions
     strategy:
       matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Save branch name as env var
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
@@ -64,13 +64,13 @@ jobs:
         run: docker image save --output ${IMAGE_NAME}_${IMAGE_TAG}.tar ${IMAGE_NAME}:${IMAGE_TAG}
 
       - name: Upload image artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
           path: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - build
       - load_supported_versions
@@ -79,7 +79,7 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Save branch name as env var
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
@@ -88,7 +88,7 @@ jobs:
         run: echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_version }}_azcli-${{ matrix.azcli_version }}" >> $GITHUB_ENV
 
       - name: Download image artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
 
@@ -102,7 +102,7 @@ jobs:
           envsubst '${TF_VERSION},${AZ_VERSION}' < tests/container-structure-tests.yml.template > tests/container-structure-tests.yml
 
       - name: run structure tests
-        uses: plexsystems/container-structure-test-action@v0.2.0
+        uses: plexsystems/container-structure-test-action@v0.3.0
         with:
           image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           config: tests/container-structure-tests.yml

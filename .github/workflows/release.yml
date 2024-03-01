@@ -7,14 +7,14 @@ on:
 
 jobs:
   load_supported_versions:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Save supported versions as output
         id: set-matrix
@@ -26,7 +26,7 @@ jobs:
           echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
 
   build_push_release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - load_supported_versions
 
@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Get and save release tag
         run: echo "RELEASE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
@@ -60,7 +60,7 @@ jobs:
         run: docker image save -o ${IMAGE_NAME}-${IMAGE_RELEASE_TAG}.tar ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_RELEASE_TAG}
 
       - name: Upload image artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_RELEASE_TAG }}
           path: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_RELEASE_TAG }}.tar
