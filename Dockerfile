@@ -30,9 +30,6 @@ ARG PYTHON_MAJOR_VERSION
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends python3=${PYTHON_MAJOR_VERSION}.2-1+b1
 RUN apt-get install -y --no-install-recommends python3-pip=23.0.1+dfsg-1
-# required dependency for azure-cli pip installation
-RUN apt-get install -y --no-install-recommends gcc=4:12.2.0-3
-RUN apt-get install -y --no-install-recommends python3-dev=3.11.2-1+b1
 # '--break-system-packages' option prevent errors when installing items with pip, without using venv.
 # It's not required in a throw-away container.
 RUN pip3 install --no-cache-dir setuptools==69.1.1 --break-system-packages
