@@ -1,9 +1,14 @@
 name: push-latest
 
-# trigger on push to master
-# only on Dockerfile related modifications
+#
+
 on:
+  # Allow manual trigger on default branch
   workflow_dispatch:
+  # Trigger selected on PR events
+  pull_request:
+    types: [synchronize, opened, reopened, ready_for_review]
+  # Trigger on push to master only on Dockerfile related modifications
   push:
     branches:
       - "master"
