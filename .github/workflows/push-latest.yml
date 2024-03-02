@@ -5,7 +5,7 @@ name: push-latest
 on:
   # Allow manual trigger on default branch
   workflow_dispatch:
-  # Trigger selected on PR events
+  # DELETE ME TEST ONLY Trigger selected on PR events
   pull_request:
     types: [synchronize, opened, reopened, ready_for_review]
   # Trigger on push to master only on Dockerfile related modifications
@@ -51,9 +51,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
             latest=auto
-          tags: |
-            # set latest tag for default branch
-            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
