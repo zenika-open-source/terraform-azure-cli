@@ -1,8 +1,14 @@
 name: push-latest
 
-# trigger on push to master
-# only on Dockerfile related modifications
+#
+
 on:
+  # Allow manual trigger on default branch
+  workflow_dispatch:
+  # DELETE ME TEST ONLY Trigger selected on PR events
+  pull_request:
+    types: [synchronize, opened, reopened, ready_for_review]
+  # Trigger on push to master only on Dockerfile related modifications
   push:
     branches:
       - "master"
@@ -15,9 +21,8 @@ on:
       - ".github/workflows/push-latest.yml"
 
 env:
-  ORGANIZATION: "zenika"
-  IMAGE_NAME: "terraform-azure-cli"
-  IMAGE_TAG: "latest"
+  IMAGE_NAME: "zenika/terraform-azure-cli"
+  REGISTRY: ghcr.io
 
 jobs:
   build_push_latest:
@@ -32,20 +37,36 @@ jobs:
           echo "AZ_VERSION=$(jq -r '.azcli_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
           echo "TF_VERSION=$(jq -r '.tf_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
 
-      - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TF_VERSION} --build-arg AZURE_CLI_VERSION=${AZ_VERSION} --tag $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
-
-      - name: Login to Docker Hub registry
-        run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-      - name: Push image to registry
-        run: docker push $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
-
-      - name: Save image
-        run: docker image save -o $IMAGE_NAME-$IMAGE_TAG.tar $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
-
-      - name: Upload image artifact
-        uses: actions/upload-artifact@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}
-          path: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}.tar
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=auto
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push container images
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/386
+          build-args: |
+            TERRAFORM_VERSION=${{ env.TF_VERSION }}
+            AZURE_CLI_VERSION=${{ env.AZ_VERSION }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
